@@ -1,5 +1,5 @@
 class Perso {
-	
+
 HOLDING={
 		EMPTY : 'empty',
 		WOOD : 'wood',
@@ -33,6 +33,7 @@ ORIENTATION={
 	get direction(){
 		return this.direction;
 	}
+
 
 	goLeft(){
 		this.pos.x-=1;

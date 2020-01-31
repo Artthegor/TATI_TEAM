@@ -23,6 +23,20 @@ document.addEventListener("DOMContentLoaded", function(){
 
 	}
 
+	function isPositionValide(axe,value){
+		switch(axe){
+			case "x":
+				return (value>0 && value<ctx.width-25);
+				break;
+			case "y":
+				return (value>0 && value<ctx.height-50);
+				break;
+			default:
+				break;
+		}
+
+	}
+
 
 	gameLoop = function(){
 
@@ -39,27 +53,27 @@ document.addEventListener("DOMContentLoaded", function(){
 		var dt = d - old_date;
     	old_date = d;
 
-		if (fleche.gauche == true ) {
+		if (fleche.gauche == true && isPositionValide("x",perso.pos.x-1)) {
 			console.log('Left was pressed');
 			console.log(perso.pos);
 			perso.goLeft();
 	       			
     	}
 
-	    if (fleche.haut == true ) {
+	    if (fleche.haut == true && isPositionValide("y",perso.pos.y-1) ) {
 	    	console.log('Up was pressed');
 	       	console.log(perso.pos);
 	       	perso.goUp();
 	       			
 	    }
 
-	    if (fleche.droite == true ) {
+	    if (fleche.droite == true && isPositionValide("x",perso.pos.x+1)) {
 			console.log('droite was pressed');
 	       	console.log(perso.pos);
 	       	perso.goRight();
 	    }	
 
-	    if (fleche.bas == true) {
+	    if (fleche.bas == true && isPositionValide("y",perso.pos.y+1)) {
 			console.log('down was pressed');
 	       	console.log(perso.pos);
 	       	perso.goDown();
