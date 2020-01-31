@@ -3,7 +3,8 @@ var ctx = null;
 var inGame = true;
 var old_date = Date.now();
 var perso;
-var fleche = {haut: false, bas: false, gauche: false, droite:false}
+var fleche = {haut: false, bas: false, gauche: false, droite:false};
+var anomaly;
 
 document.addEventListener("DOMContentLoaded", function(){
 
@@ -13,11 +14,14 @@ document.addEventListener("DOMContentLoaded", function(){
     	ctx.width = document.getElementById("zoneJeu").width;
     	ctx.height = document.getElementById("zoneJeu").height;
 
-    	document.addEventListener("keydown", captureAppuiToucheClavier)
-    	document.addEventListener("keyup", captureRelacheToucheClavier)
+    	document.addEventListener("keydown", captureAppuiToucheClavier);
+    	document.addEventListener("keyup", captureRelacheToucheClavier);
 
 
 		console.log('tamere');
+		anomaly = [   new Anomaly(new Position(0,1),material.EXTINGUISHER,type.BARREL_FIRE),
+			new Anomaly(new Position(50,50),material.IRON,type.PIPE),
+			new Anomaly(new Position(75,25),material.WOOD,type.LEAK)];
 		perso = new Perso(50, 50);
 		gameLoop();
 
@@ -46,6 +50,13 @@ document.addEventListener("DOMContentLoaded", function(){
     	render();
 		requestAnimationFrame(gameLoop);
 			
+	};
+
+	randomlyCreateAnomaly = function(){
+		if(Math.random()<0.1){
+			var tabanomalys =this.anomalys;
+			tabanomalys[Math.floor(Math.random()*tabanomalys.length)-1].isBroken=true;
+		}
 	}
 
 	update = function(d){
@@ -79,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	       	perso.goDown();
 	    }
 		
-	}
+	};
 
 	render = function(){
 		ctx.clearRect(0, 0, ctx.width, ctx.height);
@@ -101,7 +112,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		
 		
 		ctx.strokeRect(perso.pos.x, perso.pos.y, 25, 50);
-	}
+	};
 	
 
 	captureAppuiToucheClavier = function(event) {
@@ -121,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	        break;
 	    }
 
-	}
+	};
 
 	captureRelacheToucheClavier = function(event) {
 		//Capture du relachement des touches du clavier
@@ -138,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	        case 40 : 
 	            fleche.bas = false;
 		}
-	}
+	};
 
 	init();
 
