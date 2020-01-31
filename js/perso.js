@@ -1,6 +1,12 @@
 class Perso {
 	
 	constructor(x , y){
-		let pos = new Position(x,y);
+		this.pos = new Position(x,y);
+
+	}
+
+
+	get pos() {
+		return this.pos;
 	}
 }
