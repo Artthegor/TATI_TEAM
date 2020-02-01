@@ -8,8 +8,11 @@ var hauteurEchelle = 80;
 var fleche = {haut: false, bas: false, gauche: false, droite: false};
 var anomalys;
 var incrementTime = 0;
-var probaAparitionEvent = 1;
-var eventApparitionTrigger = 1000;
+var probaAparitionEvent = 0.3;
+var score =0;
+var eventApparitionTrigger = 10000;
+var lastTime =0;
+var thisTime = 0;
 
 
 
@@ -24,10 +27,9 @@ document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("keydown", captureAppuiToucheClavier);
         document.addEventListener("keyup", captureRelacheToucheClavier);
 
-        console.log('tamere');
-        anomalys = [new Anomaly(new Position(0, 1), material.EXTINGUISHER, type.BARREL_FIRE),
-            new Anomaly(new Position(50, 50), material.IRON, type.PIPE),
-            new Anomaly(new Position(75, 25), material.WOOD, type.LEAK)];
+        anomalys = [new Anomaly(new Position(666, 666), material.EXTINGUISHER, type.BARREL_FIRE),
+            new Anomaly(new Position(500, 150), material.IRON, type.PIPE),
+            new Anomaly(new Position(750, 250), material.WOOD, type.LEAK)];
         perso = new Perso(50, 50);
         gameLoop();
 
@@ -37,10 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
         switch (axe) {
             case "x":
                 return (value > 0 && value < ctx.width - 25);
-                break;
             case "y":
                 return (value > 0 && value < ctx.height - 50);
-                break;
             default:
                 break;
         }
@@ -123,8 +123,14 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log('down was pressed');
             perso.goDown();
         }
+        thisTime += dt;
+        if(lastTime+333<thisTime){
+            lastTime=thisTime;
+            score++;
+        }
 
         incrementTime += dt;
+
         if (incrementTime > eventApparitionTrigger) {
             incrementTime = 0;
             randomlyCreateAnomaly();
@@ -136,6 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		ctx.clearRect(0, 0, ctx.width, ctx.height);
 		drawAnomaly();
 		drawPersonage();
+		drawScore();
     };
 
     drawPersonage = function(){
@@ -173,6 +180,11 @@ document.addEventListener("DOMContentLoaded", function () {
 			}
 		}
 	};
+
+    drawScore =function(){
+
+        document.getElementById("score").innerHTML=score+" m";
+    } ;
 
     captureAppuiToucheClavier = function (event) {
         //Capture de l'appuie des touches du clavier
