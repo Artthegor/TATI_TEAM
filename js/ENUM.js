@@ -1,4 +1,5 @@
 const material = {
+    EMPTY : 'empty',
     WOOD: 'wood',
     IRON: 'iron',
     EXTINGUISHER: 'extinguisher',
