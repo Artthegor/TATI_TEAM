@@ -3,8 +3,8 @@ var ctx = null;
 var inGame = true;
 var old_date = Date.now();
 var perso;
-var listEchelle = [{x : 150, y : 20}, {x : 80, y : 150}];
-var hauteurEchelle = 80;
+var listEchelle = [{x : 295, y : 340}, {x : 920, y : 340}, {x : 525 , y : 525 }, {x : 775, y : 525}, {x : 920, y : 525}];
+var hauteurEchelle = 185;
 var fleche = {haut: false, bas: false, gauche: false, droite: false};
 var anomalys;
 var incrementTime = 0;
@@ -14,6 +14,13 @@ var eventApparitionTrigger = 1000;
 
 
 document.addEventListener("DOMContentLoaded", function () {
+
+	/*document.getElementById("zoneJeu").addEventListener('click', getPositionMouse);
+
+	function getPositionMouse(e){
+		console.log("(" + e.clientX + "," + e.clientY + ")");
+
+	}*/
 
     //init du jeu
     function init() {
@@ -47,8 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
 	function isPossibleToUp(){
-		console.log("ttttttt");
-		console.log(perso.pos);
 		for (const echelle of listEchelle){
 			if(echelle.x <= perso.pos.x && echelle.x + 20 > perso.pos.x && echelle.y < perso.pos.y){
 				console.log(echelle);
@@ -87,8 +92,8 @@ document.addEventListener("DOMContentLoaded", function () {
             var index = Math.floor(Math.random() * this.anomalys.length);
             anomalys[index].isBroken = true;
 
-            console.log("****Create Anomalie****");
-            console.log(anomalys[index]);
+            //console.log("****Create Anomalie****");
+            //console.log(anomalys[index]);
             if (Math.random() > 0.5) {
                 probaAparitionEvent += 0.05;
             } else if (eventApparitionTrigger > 1000) {
