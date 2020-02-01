@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function () {
         for(const anomaly of anomalys){
             if(anomaly.isBroken) nbAnomaly++;
         }
-        waterLevel-=nbAnomaly*0.5;
+        waterLevel-=nbAnomaly*0.1;
         return waterLevel <= 250;
 
     };
