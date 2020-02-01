@@ -3,6 +3,7 @@ const material = {
     WOOD: 'wood',
     IRON: 'iron',
     EXTINGUISHER: 'extinguisher',
+    STICK: 'stick'
 };
 
 const type = {

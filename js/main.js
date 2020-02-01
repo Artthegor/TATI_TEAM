@@ -6,6 +6,7 @@ var perso;
 var listEchelle = [{x : 295, y : 340}, {x : 920, y : 340}, {x : 525 , y : 525 }, {x : 775, y : 525}, {x : 920, y : 525}];
 var hauteurEchelle = 185;
 var fleche = {haut: false, bas: false, gauche: false, droite: false};
+var isSpacebarPressed = false;
 var anomalys;
 var incrementTime = 0;
 var probaAparitionEvent = 0.3;
@@ -206,6 +207,34 @@ document.addEventListener("DOMContentLoaded", function () {
             case 40 :
                 fleche.bas = true;
                 break;
+            case  32 :
+                isSpacebarPressed=true;
+                switch (perso.holdType) {
+                    case material.EMPTY:
+                        //checkLeverBrocken
+                        //else checkMaterial
+                        break;
+                    case material.EXTINGUISHER :
+                        //checkFire
+                        //else putItDown
+                        break;
+                    case material.WOOD :
+                        //checkWoodNeeded
+                        //else checkShelves
+                        //else putItDown
+                        break;
+                    case material.IRON :
+                        //checkIronNeeded
+                        //else checkShelves
+                        //else putItDown
+                        break;
+                    case material.STICK :
+                        //checkStickNeeded
+                        //else checkShelves
+                        //else putItDown
+                    default :
+
+                }
         }
 
     };
@@ -224,6 +253,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 break;
             case 40 :
                 fleche.bas = false;
+                break;
+            case 32:
+                isSpacebarPressed=false;
+                break;
+
         }
     };
 
