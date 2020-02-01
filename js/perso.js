@@ -3,22 +3,121 @@ class Perso {
     ORIENTATION = {
         RIGHT: 'right',
         LEFT: 'left',
-        BACK: 'back'
+        BACK: 'back',
+        FRONT: 'front'
     };
+
     pos = null;
     pointRef = null;
     largeur = 70;
-    hauteur = 110;
+    hauteur = 115;
     holdType = material.EMPTY;
-    direction = this.ORIENTATION.RIGHT;
+    direction = this.ORIENTATION.FRONT;
+    spritesPersoD = null;
+    persoFront = null;
 
 
 
     constructor(x, y) {
         this.pos = new Position(x, y);
         this.pointRef = new Position(0,0);
+        this.indexFrame = 0;
+        this.cntTime = 0;
+        
+        //droite
+        this.spritesPersoD = new Array(8);
+		this.spritesPersoD[0] = new Image();
+		this.spritesPersoD[0].src = "images/persoD0.png";
+
+		this.spritesPersoD[1] = new Image();
+		this.spritesPersoD[1].src = "images/persoD1.png";
+
+		this.spritesPersoD[2] = new Image();
+		this.spritesPersoD[2].src = "images/persoD2.png";
+
+		this.spritesPersoD[3] = new Image();
+		this.spritesPersoD[3].src = "images/persoD3.png";
+
+		this.spritesPersoD[4] = new Image();
+		this.spritesPersoD[4].src = "images/persoD4.png";
+
+		this.spritesPersoD[5] = new Image();
+		this.spritesPersoD[5].src = "images/persoD5.png";
+
+		this.spritesPersoD[6] = new Image();
+		this.spritesPersoD[6].src = "images/persoD6.png";
+
+		this.spritesPersoD[7] = new Image();
+		this.spritesPersoD[7].src = "images/persoD7.png";
+
+		//de face
+		this.persoFront = new Image();
+		this.persoFront.src = "images/persoFront.png";
+
+		//de dos
+		this.spritesPersoB = new Array(8);
+		this.spritesPersoB[0] = new Image();
+		this.spritesPersoB[0].src = "images/persoB0.png";
+
+		this.spritesPersoB[1] = new Image();
+		this.spritesPersoB[1].src = "images/persoB1.png";
+
+		this.spritesPersoB[2] = new Image();
+		this.spritesPersoB[2].src = "images/persoB0.png";
+
+		this.spritesPersoB[3] = new Image();
+		this.spritesPersoB[3].src = "images/persoB1.png";
+
+		this.spritesPersoB[4] = new Image();
+		this.spritesPersoB[4].src = "images/persoB0.png";
+
+		this.spritesPersoB[5] = new Image();
+		this.spritesPersoB[5].src = "images/persoB1.png";
+
+		this.spritesPersoB[6] = new Image();
+		this.spritesPersoB[6].src = "images/persoB0.png";
+
+		this.spritesPersoB[7] = new Image();
+		this.spritesPersoB[7].src = "images/persoB1.png";
+
+
 
     }
+
+	incrementTime (time, nbFrame) {
+    	this.cntTime += time;
+    	if (this.cntTime > 350){
+    		this.cntTime = 0;
+    		this.indexFrame++;
+    		if(this.indexFrame>=nbFrame){
+    			this.indexFrame = 0;
+    		}
+    	}
+    }
+    
+    getSprite (time) {
+
+    	switch (this.direction){
+    		case "front":
+    			return this.persoFront;
+    			break;
+    		case "left":
+    			this.incrementTime(time, this.spritesPersoD.length);
+    			return this.spritesPersoD[this.indexFrame];
+    			break;
+    		case "right":
+    			this.incrementTime(time, this.spritesPersoD.length);
+    			return this.spritesPersoD[this.indexFrame];
+    			break;
+    		case "back":
+    			this.incrementTime(time,this.spritesPersoB.length);
+    			return this.spritesPersoB[this.indexFrame];
+    			break;
+    	}
+    }
+
+    
+
 
     get pos() {
         return this.pos;
@@ -47,6 +146,10 @@ class Perso {
     updatePointRef(){
     	this.pointRef.x = this.pos.x+(this.largeur/2);
     	this.pointRef.y = this.pos.y+this.hauteur;
+    }
+
+    stoped(){
+    	this.direction = this.ORIENTATION.FRONT;
     }
 
     goLeft() {
@@ -85,7 +188,7 @@ class Perso {
                 this.holdType = material.IRON;
                 break;
             case "extinguisher" :
-ad                //change sprite to extinguisher holder
+                //change sprite to extinguisher holder
                 break;
             case "stick" :
                 //change sprite to stick holder

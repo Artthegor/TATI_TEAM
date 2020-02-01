@@ -12,12 +12,17 @@ var isSpacebarPressed = false;
 var anomalys;
 var incrementTime = 0;
 var probaAparitionEvent = 0.3;
-var score =0;
+var score = 0;
 var eventApparitionTrigger = 10000;
-var lastTime =0;
+var lastTime = 0;
 var thisTime = 0;
-var spritePerso = new Image();
-spritePerso.src = "images/perso1D.png";
+var nbFrame = 0;
+var dt = 0;
+
+
+
+
+var lastTimeFrame = 0;
 
 
 
@@ -42,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
         anomalys = [new Anomaly(new Position(666, 666), material.EXTINGUISHER, type.BARREL_FIRE),
             new Anomaly(new Position(500, 150), material.IRON, type.PIPE),
             new Anomaly(new Position(750, 250), material.WOOD, type.LEAK)];
-        perso = new Perso(350, 330-110);
+        perso = new Perso(350, 330-115);
 
         gameLoop();
 
@@ -130,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     update = function (d) {
 
-        var dt = d - old_date;
+        dt = d - old_date;
         old_date = d;
 
         if (fleche.gauche == true && isPositionValide("x", perso.pos.x - 1) && validYLines.includes(perso.pointRef.y)) {
@@ -162,11 +167,22 @@ document.addEventListener("DOMContentLoaded", function () {
             perso.goDown();
             perso.onALadder=false;
         }
+
+        if( (perso.pointRef.y == validYLines[0] || perso.pointRef.y == validYLines[1] || perso.pointRef.y == validYLines[2]) &&  (fleche.droite == false && fleche.gauche == false)){
+        	perso.stoped();
+        }
+
+        nbFrame += dt;
+        if(nbFrame>=1000){
+        	nbFrame=0;
+        }
+
         thisTime += dt;
         if(lastTime+333<thisTime){
             lastTime=thisTime;
             score++;
         }
+
 
         incrementTime += dt;
 
@@ -189,24 +205,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     drawPersonage = function(){
 
-
-		switch (perso.direction) {
-			case 'right' :
-				ctx.strokeStyle = '#4444CC';
-				break;
-			case 'left' :
-				ctx.strokeStyle = '#FFF56E';
-				break;
-			case 'back' :
-				ctx.strokeStyle = '#111114';
-				break;
-			default :
-				break;
-		}
-		
-		
+		ctx.drawImage(perso.getSprite(dt), perso.pos.x, perso.pos.y, perso.largeur, perso.hauteur);
 		ctx.strokeRect(perso.pos.x, perso.pos.y, perso.largeur, perso.hauteur);
-		ctx.drawImage(spritePerso, perso.pos.x, perso.pos.y, perso.largeur, perso.hauteur);
+		
 		
 	};
 	
@@ -241,15 +242,27 @@ document.addEventListener("DOMContentLoaded", function () {
         switch (event.keyCode) {
             case 37 :
                 fleche.gauche = true;
+                fleche.bas = false;
+                fleche.droite = false;
+                fleche.haut = false;
                 break;
             case 38 :
                 fleche.haut = true;
+                fleche.gauche = false;
+                fleche.droite = false;
+                fleche.bas = false;
                 break;
             case 39 :
                 fleche.droite = true;
+                fleche.gauche = false;
+                fleche.bas = false;
+                fleche.haut = false;
                 break;
             case 40 :
                 fleche.bas = true;
+                fleche.gauche = false;
+                fleche.droite = false;
+                fleche.haut = false;
                 break;
             case  32 :
                 isSpacebarPressed=true;
