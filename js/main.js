@@ -31,7 +31,6 @@ var lastTime = 0;
 var thisTime = 0;
 var spritePerso = new Image();
 var waterLevel = 520;
-spritePerso.src = "images/perso1D.png";
 var weatherAPIKey="29b60c733e81a543a8bc59913c04567e";
 
 var options = {
@@ -51,7 +50,6 @@ function error(err) {
 
 
 function getWeather(latitude,longitude){
-    //console.log("https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid="+weatherAPIKey);
     var requestURL="https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid="+weatherAPIKey;
     var request = new XMLHttpRequest();
     request.open('GET', requestURL);
@@ -59,10 +57,7 @@ function getWeather(latitude,longitude){
     request.send();
     request.onload = function() {
         var currentWeather = request.response;
-        //setWeather(currentWeather);
-        //console.log(currentWeather);
         var currentPressure=currentWeather.main.pressure;
-        //console.log("PRESSURE SA GRAND MERE : "+currentPressure);
         if(currentPressure>1020){
             //GRAND SOLEIL SA GRAND MERE
         }
@@ -85,12 +80,12 @@ function getWeather(latitude,longitude){
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    /*document.getElementById("zoneJeu").addEventListener('click', getPositionMouse);
+    document.getElementById("zoneJeu").addEventListener('click', getPositionMouse);
 
     function getPositionMouse(e){
         console.log("(" + e.clientX + "," + e.clientY + ")");
 
-    }*/
+    }
 
     //init du jeu
     function init() {
@@ -110,7 +105,9 @@ document.addEventListener("DOMContentLoaded", function () {
         shelveStick = new Shelve(new Position(700, 520),material.STICK,0);
         shelves = [shelveWood,shelveStick,shelveMetal];
         perso = new Perso(350, 520 - 115);
-        anomalys = [new Anomaly(new Position(666, 520), material.EXTINGUISHER, type.BARREL_FIRE),
+        anomalys = [new Anomaly(new Position(511, 685), material.EXTINGUISHER, type.BARREL_FIRE),
+            new Anomaly(new Position(764, 685), material.EXTINGUISHER, type.BARREL_FIRE),
+            new Anomaly(new Position(320, 520), material.EXTINGUISHER, type.BARREL_FIRE),
             new Anomaly(new Position(500, 330), material.IRON, type.PIPE),
             new Anomaly(new Position(750, 520), material.WOOD, type.LEAK)];
         navigator.geolocation.getCurrentPosition(success, error, options);
@@ -135,7 +132,6 @@ document.addEventListener("DOMContentLoaded", function () {
         for (const echelle of listEchelle) {
             if (echelle.up) {
                 if (echelle.x <= perso.pointRef.x && echelle.x + largeurEchelle >= perso.pointRef.x && echelle.y < perso.pos.y + perso.hauteur) {
-                    console.log(echelle);
                     return true;
                 }
             }
@@ -148,7 +144,6 @@ document.addEventListener("DOMContentLoaded", function () {
     function isPossibleToDown() {
         for (const echelle of listEchelle) {
             if (echelle.x <= perso.pointRef.x && echelle.x + largeurEchelle >= perso.pointRef.x && echelle.y + hauteurEchelle > perso.pointRef.y && echelle.y <= perso.pointRef.y && perso.pointRef.y < 685) {
-                console.log(perso.pointRef);
                 return true;
             }
         }
@@ -181,9 +176,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (Math.random() < probaAparitionEvent) {
             var index = Math.floor(Math.random() * this.anomalys.length);
             anomalys[index].isBroken = true;
-
-            //console.log("****Create Anomalie****");
-            //console.log(anomalys[index]);
             if (Math.random() > 0.5) {
                 probaAparitionEvent += 0.05;
             } else if (eventApparitionTrigger > 1000) {
@@ -268,7 +260,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (fleche.gauche == true && isPositionValide("x", perso.pos.x - 1) && validYLines.includes(perso.pointRef.y)) {
             if (testMurLeft()) {
-                console.log('Left was pressed');
                 perso.goLeft();
             }
 
@@ -276,22 +267,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         if (fleche.haut == true && isPositionValide("y", perso.pos.y - 1) && isPossibleToUp()) {
-            console.log('Up was pressed');
             perso.goUp();
 
         }
 
         if (fleche.droite == true && isPositionValide("x", perso.pos.x + 1) && validYLines.includes(perso.pointRef.y)) {
             if (testMurRight()) {
-                console.log('droite was pressed');
-                console.log(perso.pos);
                 perso.goRight();
             }
 
         }
 
         if (fleche.bas == true && isPositionValide("y", perso.pos.y + 1) && isPossibleToDown()) {
-            console.log('down was pressed');
             perso.goDown();
             perso.onALadder = false;
         }
@@ -308,7 +295,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (isSpacebarPressed) {
             isSpacebarPressed = false;
-            console.log('space was pressed');
             executeSpace();
 
         }
@@ -400,7 +386,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     drawRepareKit = function () {
         for (const repaireKit of repaireKits) {
-            console.log("draw repair kit");
             ctx.beginPath();
             ctx.lineWidth = "2";
             ctx.arc(repaireKit.position.x, repaireKit.position.y, repaireKit.width, 0, 2 * Math.PI);
@@ -461,13 +446,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         putMaterialKitDown();
                 break;
             case material.WOOD :
-                console.log("wood");
                 if (!checkHitBoxAnomaliePerso()) {
-                    console.log("wood hit");
                     if (!checkHitBoxShelvesPerso()) {
-                        console.log("wood shelve");
                         if (!checkHitBoxMaterialPerso()) {
-                            console.log("wood");
                             putMaterialKitDown();
                         }
                     }
@@ -516,7 +497,6 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     putMaterialKitDown = function () {
-        console.log("put" + perso.holdType);
         repaireKits.push(new RepareKit(perso.pointRef, perso.holdType));
         perso.holdType = material.EMPTY;
     };
@@ -534,7 +514,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     checkHitBoxShelvesPerso = function () {
         for (const shelve of shelves) {
-            console.log(perso.pos.y);
             if (perso.pointRef.y !== 520 ||
                 shelve.position.x > perso.pos.x + perso.largeur || shelve.position.x + shelve.width < perso.pos.x) continue;
             return shelve.takeItem(perso);
