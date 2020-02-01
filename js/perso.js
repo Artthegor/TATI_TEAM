@@ -6,12 +6,16 @@ class Perso {
         BACK: 'back'
     };
     pos = null;
+    pointRef = null;
+    largeur = 70;
+    hauteur = 110;
     holdType = material.EMPTY;
     direction = this.ORIENTATION.RIGHT;
 
 
     constructor(x, y) {
         this.pos = new Position(x, y);
+        this.pointRef = new Position(0,0);
 
     }
 
@@ -27,6 +31,22 @@ class Perso {
         return this.direction;
     }
 
+    get pointRef(){
+    	return this.pointRef;
+    }
+
+    get largeur(){
+    	return this.largeur;
+    }
+
+    get hauteur(){
+    	return this.hauteur;
+    }
+
+    updatePointRef(){
+    	this.pointRef.x = this.pos.x+(this.largeur/2);
+    	this.pointRef.y = this.pos.y+this.hauteur;
+    }
 
     goLeft() {
         this.pos.x -= 1;

@@ -3,7 +3,6 @@ var ctx = null;
 var inGame = true;
 var old_date = Date.now();
 var perso;
-var hauteurPerso=50;
 var listEchelle = [{x : 295, y : 340}, {x : 920, y : 340}, {x : 525 , y : 525 }, {x : 775, y : 525}, {x : 920, y : 525}];
 var hauteurEchelle = 185;
 var largeurEchelle = 30;
@@ -15,6 +14,8 @@ var score =0;
 var eventApparitionTrigger = 10000;
 var lastTime =0;
 var thisTime = 0;
+var spritePerso = new Image();
+spritePerso.src = "images/perso1D.png";
 
 
 
@@ -39,10 +40,12 @@ document.addEventListener("DOMContentLoaded", function () {
         anomalys = [new Anomaly(new Position(666, 666), material.EXTINGUISHER, type.BARREL_FIRE),
             new Anomaly(new Position(500, 150), material.IRON, type.PIPE),
             new Anomaly(new Position(750, 250), material.WOOD, type.LEAK)];
-        perso = new Perso(350, 340-hauteurPerso);
+        perso = new Perso(350, 340-110);
+
         gameLoop();
 
     }
+
 
     function isPositionValide(axe, value) {
         switch (axe) {
@@ -57,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	function isPossibleToUp(){
 		for (const echelle of listEchelle){
-			if(echelle.x <= perso.pos.x && echelle.x + largeurEchelle > perso.pos.x && echelle.y < perso.pos.y+hauteurPerso){
+			if(echelle.x <= perso.pointRef.x && echelle.x + largeurEchelle >= perso.pointRef.x && echelle.y < perso.pos.y+perso.hauteur){
 				console.log(echelle);
 				return true;
 			}
@@ -68,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	function isPossibleToDown(){
 		for (const echelle of listEchelle){
-			if(echelle.x <= perso.pos.x && echelle.x + largeurEchelle > perso.pos.x && echelle.y+hauteurEchelle >= perso.pos.y){
+			if(echelle.x <= perso.pointRef.x && echelle.x + largeurEchelle >= perso.pointRef.x  && echelle.y+hauteurEchelle >= perso.pos.y){
 				console.log(echelle);
 				return true;
 			}
@@ -143,6 +146,8 @@ document.addEventListener("DOMContentLoaded", function () {
             randomlyCreateAnomaly();
         }
 
+        perso.updatePointRef();
+
     };
 
     render = function () {
@@ -171,7 +176,8 @@ document.addEventListener("DOMContentLoaded", function () {
 		}
 		
 		
-		ctx.strokeRect(perso.pos.x, perso.pos.y, 25, 50);
+		ctx.strokeRect(perso.pos.x, perso.pos.y, perso.largeur, perso.hauteur);
+		ctx.drawImage(spritePerso, perso.pos.x, perso.pos.y, perso.largeur, perso.hauteur);
 		
 	};
 	

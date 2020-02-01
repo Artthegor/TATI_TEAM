@@ -13,4 +13,13 @@ class Position {
 	get y() {
 		return this.y;
 	}
+
+	set x(x){
+		this.x = x;
+	}
+
+	set y(y){
+		this.y = y;
+	}
+
 }
