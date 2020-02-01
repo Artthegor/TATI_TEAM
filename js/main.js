@@ -3,12 +3,8 @@ var ctx = null;
 var inGame = true;
 var old_date = Date.now();
 var perso;
-var listEchelle = [{x: 295, y: 330, up: true}, {x: 920, y: 330, up: false}, {x: 525, y: 520, up: true}, {
-    x: 750,
-    y: 520,
-    up: true
-}, {x: 920, y: 520, up: true}];
-var validYLines = [330, 520, 685];
+var listEchelle = [{x : 295, y : 330, up : true}, {x : 920, y : 330, up : false}, {x : 525 , y : 520, up : true }, {x : 750, y : 520, up : true}, {x : 920, y : 520, up : true}];
+var validYLines=[330,520,685];
 var hauteurEchelle = 190;
 var largeurEchelle = 45;
 var fleche = {haut: false, bas: false, gauche: false, droite: false};
@@ -26,6 +22,58 @@ var thisTime = 0;
 var spritePerso = new Image();
 var waterLevel = 520;
 spritePerso.src = "images/perso1D.png";
+var weatherAPIKey="29b60c733e81a543a8bc59913c04567e";
+
+var options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0
+};
+
+function success(pos) {
+    getWeather(pos.coords.latitude,pos.coords.longitude);
+}
+
+function error(err) {
+    console.warn(`ERREUR (${err.code}): ${err.message}`);
+}
+
+
+
+function getWeather(latitude,longitude){
+    //console.log("https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid="+weatherAPIKey);
+    var requestURL="https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid="+weatherAPIKey;
+    var request = new XMLHttpRequest();
+    request.open('GET', requestURL);
+    request.responseType = 'json';
+    request.send();
+    request.onload = function() {
+        var currentWeather = request.response;
+        //setWeather(currentWeather);
+        //console.log(currentWeather);
+        var currentPressure=currentWeather.main.pressure;
+        //console.log("PRESSURE SA GRAND MERE : "+currentPressure);
+        if(currentPressure>1020){
+            //GRAND SOLEIL SA GRAND MERE
+        }
+        else{
+            if(currentPressure>1013){
+                //UN PEU DE SOLEIL MAIS AUSSI DES NUAGES MA GUEULE
+            }
+            else{
+                // C EST LA TEMPETE DE OUF MON BRO
+            }
+        }
+    };
+
+}
+
+
+
+
+
+
+
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -49,12 +97,14 @@ document.addEventListener("DOMContentLoaded", function () {
         let anoDestroy = new Anomaly(new Position(300, 520), material.WOOD, type.LEAK);
         anoDestroy.destroy();
 
-        anomalys = [new Anomaly(new Position(666, 520), material.EXTINGUISHER, type.BARREL_FIRE),
-            new Anomaly(new Position(500, 520), material.IRON, type.PIPE), anoDestroy];
         repaireKits = [];
         shelveWood = new Shelve(new Position(500, 520), material.WOOD, 2);
         shelves = [shelveWood];
         perso = new Perso(350, 520 - 110);
+        anomalys = [new Anomaly(new Position(666, 666), material.EXTINGUISHER, type.BARREL_FIRE),
+            new Anomaly(new Position(500, 150), material.IRON, type.PIPE),
+            new Anomaly(new Position(750, 250), material.WOOD, type.LEAK)];
+        navigator.geolocation.getCurrentPosition(success, error, options);
         gameLoop();
 
     }
