@@ -3,8 +3,10 @@ var ctx = null;
 var inGame = true;
 var old_date = Date.now();
 var perso;
+var hauteurPerso=50;
 var listEchelle = [{x : 295, y : 340}, {x : 920, y : 340}, {x : 525 , y : 525 }, {x : 775, y : 525}, {x : 920, y : 525}];
 var hauteurEchelle = 185;
+var largeurEchelle = 30;
 var fleche = {haut: false, bas: false, gauche: false, droite: false};
 var isSpacebarPressed = false;
 var anomalys;
@@ -38,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
         anomalys = [new Anomaly(new Position(666, 666), material.EXTINGUISHER, type.BARREL_FIRE),
             new Anomaly(new Position(500, 150), material.IRON, type.PIPE),
             new Anomaly(new Position(750, 250), material.WOOD, type.LEAK)];
-        perso = new Perso(50, 50);
+        perso = new Perso(350, 340-hauteurPerso);
         gameLoop();
 
     }
@@ -56,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	function isPossibleToUp(){
 		for (const echelle of listEchelle){
-			if(echelle.x <= perso.pos.x && echelle.x + 20 > perso.pos.x && echelle.y < perso.pos.y){
+			if(echelle.x <= perso.pos.x && echelle.x + largeurEchelle > perso.pos.x && echelle.y < perso.pos.y+hauteurPerso){
 				console.log(echelle);
 				return true;
 			}
@@ -67,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	function isPossibleToDown(){
 		for (const echelle of listEchelle){
-			if(echelle.x <= perso.pos.x && echelle.x + 20 > perso.pos.x && echelle.y+hauteurEchelle >= perso.pos.y){
+			if(echelle.x <= perso.pos.x && echelle.x + largeurEchelle > perso.pos.x && echelle.y+hauteurEchelle >= perso.pos.y){
 				console.log(echelle);
 				return true;
 			}
@@ -148,6 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		ctx.clearRect(0, 0, ctx.width, ctx.height);
 		drawAnomaly();
 		drawPersonage();
+		drawEchelle();
 		drawScore();
     };
 
@@ -170,10 +173,17 @@ document.addEventListener("DOMContentLoaded", function () {
 		
 		
 		ctx.strokeRect(perso.pos.x, perso.pos.y, 25, 50);
-		ctx.strokeStyle = '#888888';
-		ctx.strokeRect(150, 20, 20, 80);
+		
 	};
 	
+	drawEchelle = function(){
+		ctx.strokeStyle = '#888888';
+		
+
+		for (const echelle of listEchelle){
+			ctx.strokeRect(echelle.x, echelle.y, largeurEchelle, hauteurEchelle);
+		}
+	}
 
     drawAnomaly = function() {
     	for (const anomaly of this.anomalys){
