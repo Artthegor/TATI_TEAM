@@ -4,8 +4,12 @@ var inGame = true;
 var old_date = Date.now();
 var perso1;
 var perso2;
-var listEchelle = [{x : 295, y : 330, up : true}, {x : 920, y : 330, up : false}, {x : 525 , y : 520, up : true }, {x : 750, y : 520, up : true}, {x : 920, y : 520, up : true}];
-var validYLines=[330,520,685];
+var listEchelle = [{x: 281, y: 330, up: true}, {x: 920, y: 330, up: false}, {x: 525, y: 520, up: true}, {
+    x: 740,
+    y: 520,
+    up: true
+}, {x: 910, y: 520, up: true}];
+var validYLines = [330, 520, 685];
 var hauteurEchelle = 190;
 var largeurEchelle = 45;
 var fleche = {haut: false, bas: false, gauche: false, droite: false};
@@ -19,22 +23,23 @@ var shelveStick;
 var shelveMetal;
 var shelves;
 var incrementTime = 0;
-var probaAparitionEvent = 0.3;
 var score = 0;
+var probaAparitionEvent = 0.3;
 var eventApparitionTrigger = 10000;
 var lastTime = 0;
 var thisTime = 0;
 var nbFrame = 0;
 var dt = 0;
-var incrementTimeSupplies =0;
+var incrementTimeSupplies = 0;
 var eventSuppliesApparitionTrigger = 3000;
-var probaSuppliesApparition =0.8;
+var probaSuppliesApparition = 0.8;
 
 var lastTime = 0;
 var thisTime = 0;
 var spritePerso = new Image();
+
 var waterLevel = 520;
-var weatherAPIKey="29b60c733e81a543a8bc59913c04567e";
+var weatherAPIKey = "29b60c733e81a543a8bc59913c04567e";
 
 var options = {
     enableHighAccuracy: true,
@@ -43,7 +48,7 @@ var options = {
 };
 
 function success(pos) {
-    getWeather(pos.coords.latitude,pos.coords.longitude);
+    getWeather(pos.coords.latitude, pos.coords.longitude);
 }
 
 function error(err) {
@@ -51,25 +56,31 @@ function error(err) {
 }
 
 
-
-function getWeather(latitude,longitude){
-    var requestURL="https://api.openweathermap.org/data/2.5/weather?lat="+latitude+"&lon="+longitude+"&appid="+weatherAPIKey;
+function getWeather(latitude, longitude) {
+    var requestURL = "https://api.openweathermap.org/data/2.5/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + weatherAPIKey;
     var request = new XMLHttpRequest();
     request.open('GET', requestURL);
     request.responseType = 'json';
     request.send();
-    request.onload = function() {
+    request.onload = function () {
         var currentWeather = request.response;
-        var currentPressure=currentWeather.main.pressure;
-        if(currentPressure>1020){
+        var currentPressure = currentWeather.main.pressure;
+        if (currentPressure > 1020) {
             //GRAND SOLEIL SA GRAND MERE
-        }
-        else{
-            if(currentPressure>1013){
+            eventApparitionTrigger = 8000;
+            probaAparitionEvent = 0.4;
+            probaSuppliesApparition = 0.8;
+        } else {
+            if (currentPressure > 1013) {
                 //UN PEU DE SOLEIL MAIS AUSSI DES NUAGES MA GUEULE
-            }
-            else{
+                eventApparitionTrigger = 5000;
+                probaAparitionEvent = 0.3;
+                probaSuppliesApparition = 0.85;
+            } else {
                 // C EST LA TEMPETE DE OUF MON BRO
+                eventApparitionTrigger = 3000;
+                probaAparitionEvent = 0.2;
+                probaSuppliesApparition = 0.9;
             }
         }
     };
@@ -77,15 +88,11 @@ function getWeather(latitude,longitude){
 }
 
 
-
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("zoneJeu").addEventListener('click', getPositionMouse);
 
-    function getPositionMouse(e){
+    function getPositionMouse(e) {
         console.log("(" + e.clientX + "," + e.clientY + ")");
 
     }
@@ -105,8 +112,8 @@ document.addEventListener("DOMContentLoaded", function () {
         repaireKits = [];
         shelveWood = new Shelve(new Position(500, 520), material.WOOD, 0);
         shelveMetal = new Shelve(new Position(600, 520), material.IRON, 0);
-        shelveStick = new Shelve(new Position(700, 520),material.STICK,0);
-        shelves = [shelveWood,shelveStick,shelveMetal];
+        shelveStick = new Shelve(new Position(700, 520), material.STICK, 0);
+        shelves = [shelveWood, shelveStick, shelveMetal];
 
         perso1 = new Perso(350, 520 - 115);
         console.log(perso1);
@@ -169,12 +176,12 @@ document.addEventListener("DOMContentLoaded", function () {
         requestAnimationFrame(gameLoop);
     };
 
-    increaseWaterLevel = function(){
-        var nbAnomaly =0;
-        for(const anomaly of anomalys){
-            if(anomaly.isBroken) nbAnomaly++;
+    increaseWaterLevel = function () {
+        var nbAnomaly = 0;
+        for (const anomaly of anomalys) {
+            if (anomaly.isBroken) nbAnomaly++;
         }
-        waterLevel-=nbAnomaly*0.1;
+        waterLevel -= nbAnomaly * 0.1;
         return waterLevel <= 250;
 
     };
@@ -192,14 +199,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    moveInWaterSupplies = function (){
-        for(var kit of repaireKits){
-            if(kit.position.x >1150){
-                kit.position = new Position(kit.position.x-1,waterLevel +50);
-            }
-            else {
-                if (kit.position.x === 1150){
-                    switch(kit.material){
+    moveInWaterSupplies = function () {
+        for (var kit of repaireKits) {
+            if (kit.position.x > 1150) {
+                kit.position = new Position(kit.position.x - 1, waterLevel + 50);
+            } else {
+                if (kit.position.x === 1150) {
+                    switch (kit.material) {
                         case material.STICK :
                             shelveStick.nbMaterialKit++;
 
@@ -212,7 +218,7 @@ document.addEventListener("DOMContentLoaded", function () {
                             break;
                         default:
                     }
-                    repaireKits.splice(repaireKits.indexOf(kit),1);
+                    repaireKits.splice(repaireKits.indexOf(kit), 1);
                 }
             }
         }
@@ -221,17 +227,17 @@ document.addEventListener("DOMContentLoaded", function () {
     randomlyAppearsSupplies = function () {
         if (Math.random() < probaSuppliesApparition) {
             var index = Math.floor(Math.random() * 3);
-            switch(index){
+            switch (index) {
                 case 0 :
-                    var r1 = new RepareKit(new Position(1400,waterLevel+50),material.WOOD);
+                    var r1 = new RepareKit(new Position(1400, waterLevel + 50), material.WOOD);
                     repaireKits.push(r1);
                     break;
                 case 1 :
-                    var r1 = new RepareKit(new Position(1400,waterLevel+50),material.IRON);
+                    var r1 = new RepareKit(new Position(1400, waterLevel + 50), material.IRON);
                     repaireKits.push(r1);
                     break;
                 case 2 :
-                    var r1 = new RepareKit(new Position(1400,waterLevel+50),material.STICK);
+                    var r1 = new RepareKit(new Position(1400, waterLevel + 50), material.STICK);
                     repaireKits.push(r1);
                     break;
                 default:
@@ -239,9 +245,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             }
             probaSuppliesApparition -= 0.05;
-        }
-        else {
-            probaSuppliesApparition +=0.05;
+        } else {
+            probaSuppliesApparition += 0.05;
         }
     };
 
@@ -278,7 +283,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-
         if (fleche.haut == true && isPositionValide("y", perso1.pos.y - 1) && isPossibleToUp(perso1)) {
             perso1.goUp();
         }
@@ -299,7 +303,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-
         if (fleche.bas == true && isPositionValide("y", perso1.pos.y + 1) && isPossibleToDown(perso1)) {
             perso1.goDown();
             perso1.onALadder = false;
@@ -310,18 +313,17 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
 
-        if( (perso1.pointRef.y == validYLines[0] || perso1.pointRef.y == validYLines[1] || perso1.pointRef.y == validYLines[2]) &&  (fleche.droite == false && fleche.gauche == false)){
-        	perso1.stoped();
+        if ((perso1.pointRef.y == validYLines[0] || perso1.pointRef.y == validYLines[1] || perso1.pointRef.y == validYLines[2]) && (fleche.droite == false && fleche.gauche == false)) {
+            perso1.stoped();
         }
-        if( (perso2.pointRef.y == validYLines[0] || perso2.pointRef.y == validYLines[1] || perso2.pointRef.y == validYLines[2]) &&  (fleche2.droite == false && fleche2.gauche == false)){
-        	perso2.stoped();
+        if ((perso2.pointRef.y == validYLines[0] || perso2.pointRef.y == validYLines[1] || perso2.pointRef.y == validYLines[2]) && (fleche2.droite == false && fleche2.gauche == false)) {
+            perso2.stoped();
         }
-
 
 
         nbFrame += dt;
-        if(nbFrame>=1000){
-        	nbFrame=0;
+        if (nbFrame >= 1000) {
+            nbFrame = 0;
         }
 
         if (isSpacebarPressed) {
@@ -345,15 +347,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         incrementTime += dt;
         incrementTimeSupplies += dt;
-        if(incrementTimeSupplies > eventSuppliesApparitionTrigger){
-            incrementTimeSupplies=0;
+        if (incrementTimeSupplies > eventSuppliesApparitionTrigger) {
+            incrementTimeSupplies = 0;
             randomlyAppearsSupplies();
         }
         if (incrementTime > eventApparitionTrigger) {
             incrementTime = 0;
             randomlyCreateAnomaly();
         }
-         inGame = !increaseWaterLevel();
+        inGame = !increaseWaterLevel();
 
         perso1.updatePointRef();
         perso2.updatePointRef();
@@ -374,45 +376,45 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
 
-    function drawPersonage(perso){
+    function drawPersonage(perso) {
 
-		ctx.drawImage(perso.getSprite(dt), perso.pos.x, perso.pos.y, perso.largeur, perso.hauteur);
-		ctx.strokeRect(perso.pos.x, perso.pos.y, perso.largeur, perso.hauteur);
-		
-		
-	};
-	
-	drawEchelle = function(){
-		ctx.strokeStyle = '#888888';
-		
+        ctx.drawImage(perso.getSprite(dt), perso.pos.x, perso.pos.y, perso.largeur, perso.hauteur);
+        ctx.strokeRect(perso.pos.x, perso.pos.y, perso.largeur, perso.hauteur);
 
-		for (const echelle of listEchelle){
-			ctx.strokeRect(echelle.x, echelle.y, largeurEchelle, hauteurEchelle);
-		}
-	}
 
-    drawAnomaly = function() {
-    	for (const anomaly of this.anomalys){
-    		if (anomaly.isBroken){
-				ctx.beginPath();
-				ctx.lineWidth = "2";
-				ctx.arc(anomaly.position.x, anomaly.position.y, 10, 0, 2 * Math.PI);
-				ctx.fillStyle = "#FF4422";
-				ctx.fill();
-			}
-		}
-	};
+    };
 
-    drawScore =function(){
+    drawEchelle = function () {
+        ctx.strokeStyle = '#888888';
 
-        document.getElementById("score").innerHTML=score+" m";
-    } ;
+
+        for (const echelle of listEchelle) {
+            ctx.strokeRect(echelle.x, echelle.y, largeurEchelle, hauteurEchelle);
+        }
+    }
+
+    drawAnomaly = function () {
+        for (const anomaly of this.anomalys) {
+            if (anomaly.isBroken) {
+                ctx.beginPath();
+                ctx.lineWidth = "2";
+                ctx.arc(anomaly.position.x, anomaly.position.y, 10, 0, 2 * Math.PI);
+                ctx.fillStyle = "#FF4422";
+                ctx.fill();
+            }
+        }
+    };
+
+    drawScore = function () {
+
+        document.getElementById("score").innerHTML = score + " m";
+    };
 
     drawWater = function () {
         ctx.fillStyle = '#3f36e5';
-        ctx.globalAlpha =0.4;
+        ctx.globalAlpha = 0.4;
         ctx.fillRect(0, waterLevel, ctx.width, ctx.height);
-        ctx.globalAlpha =1;
+        ctx.globalAlpha = 1;
     };
 
     drawShelve = function () {
@@ -433,7 +435,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-  
 
     captureAppuiToucheClavier = function (event) {
         //Capture de l'appuie des touches du clavier
@@ -564,7 +565,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-                //player 2
+            //player 2
             case 90 :
                 fleche2.haut = false;
                 break;
@@ -575,8 +576,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 fleche2.droite = false;
                 break;
             case 69 :
-             	isSpacebarPressed2 = false;
-             	break;
+                isSpacebarPressed2 = false;
+                break;
             case 83 :
                 fleche2.bas = false;
                 break;
