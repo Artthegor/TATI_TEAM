@@ -3,9 +3,10 @@ var ctx = null;
 var inGame = true;
 var old_date = Date.now();
 var perso;
-var listEchelle = [{x : 295, y : 340}, {x : 920, y : 340}, {x : 525 , y : 525 }, {x : 775, y : 525}, {x : 920, y : 525}];
-var hauteurEchelle = 185;
-var largeurEchelle = 30;
+var listEchelle = [{x : 295, y : 330, up : true}, {x : 920, y : 330, up : false}, {x : 525 , y : 520, up : true }, {x : 750, y : 520, up : true}, {x : 920, y : 520, up : true}];
+var validYLines=[330,520,685];
+var hauteurEchelle = 190;
+var largeurEchelle = 45;
 var fleche = {haut: false, bas: false, gauche: false, droite: false};
 var isSpacebarPressed = false;
 var anomalys;
@@ -41,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
         anomalys = [new Anomaly(new Position(666, 666), material.EXTINGUISHER, type.BARREL_FIRE),
             new Anomaly(new Position(500, 150), material.IRON, type.PIPE),
             new Anomaly(new Position(750, 250), material.WOOD, type.LEAK)];
-        perso = new Perso(350, 340-110);
+        perso = new Perso(350, 330-110);
 
         gameLoop();
 
@@ -61,10 +62,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	function isPossibleToUp(){
 		for (const echelle of listEchelle){
-			if(echelle.x <= perso.pointRef.x && echelle.x + largeurEchelle >= perso.pointRef.x && echelle.y < perso.pos.y+perso.hauteur){
-				console.log(echelle);
-				return true;
+			if(echelle.up){
+				if(echelle.x <= perso.pointRef.x && echelle.x + largeurEchelle >= perso.pointRef.x && echelle.y < perso.pos.y+perso.hauteur){
+					console.log(echelle);
+					return true;
+				}
 			}
+			
 		}
 		
 		return false;
@@ -72,8 +76,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 	function isPossibleToDown(){
 		for (const echelle of listEchelle){
-			if(echelle.x <= perso.pointRef.x && echelle.x + largeurEchelle >= perso.pointRef.x  && echelle.y+hauteurEchelle >= perso.pos.y){
-				console.log(echelle);
+			if(echelle.x <= perso.pointRef.x && echelle.x + largeurEchelle >= perso.pointRef.x  && echelle.y+hauteurEchelle > perso.pointRef.y && echelle.y <= perso.pointRef.y && perso.pointRef.y < 685){
+				console.log(perso.pointRef);
 				return true;
 			}
 		}
@@ -108,14 +112,33 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
+    testMurLeft = function(){
+    	return ((perso.pointRef.y == validYLines[0] && perso.pos.x > 295) ||
+    		((perso.pointRef.y == validYLines[1] && perso.pos.x > 250)     &&
+    		(perso.pointRef.y == validYLines[1] && ((perso.pos.x) < 709   || perso.pos.x > 711))) ||
+    		((perso.pointRef.y == validYLines[2] && perso.pos.x > 330)&& 
+    		(perso.pointRef.y == validYLines[2] && ((perso.pos.x) < 825   || perso.pos.x > 825))));
+    }
+
+    testMurRight = function(){
+    	return ((perso.pointRef.y == validYLines[0] && perso.pos.x + perso.largeur < 1100)   || 
+    		((perso.pointRef.y == validYLines[1] && perso.pos.x + perso.largeur < 1100)   && 
+    		(perso.pointRef.y == validYLines[1] && ((perso.pos.x + perso.largeur) < 709 || perso.pos.x + perso.largeur > 711))) || 
+    		((perso.pointRef.y == validYLines[2] &&  perso.pos.x + perso.largeur < 1000) && 
+    		(perso.pointRef.y == validYLines[2] && ((perso.pos.x + perso.largeur) < 825 || perso.pos.x + perso.largeur > 825))));
+    }
+
     update = function (d) {
 
         var dt = d - old_date;
         old_date = d;
 
-        if (fleche.gauche == true && isPositionValide("x", perso.pos.x - 1)) {
-            console.log('Left was pressed');
-            perso.goLeft();
+        if (fleche.gauche == true && isPositionValide("x", perso.pos.x - 1) && validYLines.includes(perso.pointRef.y)) {
+        	if(testMurLeft()){
+        		console.log('Left was pressed');
+            	perso.goLeft();
+        	}
+            
 
         }
 
@@ -125,14 +148,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-        if (fleche.droite == true && isPositionValide("x", perso.pos.x + 1)) {
-            console.log('droite was pressed');
-            perso.goRight();
+        if (fleche.droite == true && isPositionValide("x", perso.pos.x + 1) && validYLines.includes(perso.pointRef.y)) {
+        	if(testMurRight()){
+        		console.log('droite was pressed');
+        		console.log(perso.pos);
+            	perso.goRight();
+        	}
+            
         }
 
         if (fleche.bas == true && isPositionValide("y", perso.pos.y + 1)&& isPossibleToDown()) {
             console.log('down was pressed');
             perso.goDown();
+            perso.onALadder=false;
         }
         thisTime += dt;
         if(lastTime+333<thisTime){

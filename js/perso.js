@@ -13,6 +13,7 @@ class Perso {
     direction = this.ORIENTATION.RIGHT;
 
 
+
     constructor(x, y) {
         this.pos = new Position(x, y);
         this.pointRef = new Position(0,0);
@@ -59,11 +60,13 @@ class Perso {
     }
 
     goUp() {
+    	this.onALadder=true;
         this.pos.y -= 1;
         this.direction = this.ORIENTATION.BACK;
     }
 
     goDown() {
+    	this.onALadder=true;
         this.pos.y += 1;
         this.direction = this.ORIENTATION.BACK;
     }
