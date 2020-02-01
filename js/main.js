@@ -2,13 +2,16 @@
 var ctx = null;
 var inGame = true;
 var old_date = Date.now();
-var perso;
+var perso1;
+var perso2;
 var listEchelle = [{x : 295, y : 330, up : true}, {x : 920, y : 330, up : false}, {x : 525 , y : 520, up : true }, {x : 750, y : 520, up : true}, {x : 920, y : 520, up : true}];
 var validYLines=[330,520,685];
 var hauteurEchelle = 190;
 var largeurEchelle = 45;
 var fleche = {haut: false, bas: false, gauche: false, droite: false};
+var fleche2 = {haut: false, bas: false, gauche: false, droite: false};
 var isSpacebarPressed = false;
+var isSpacebarPressed2 = false;
 var anomalys;
 var repaireKits;
 var shelveWood;
@@ -104,7 +107,12 @@ document.addEventListener("DOMContentLoaded", function () {
         shelveMetal = new Shelve(new Position(600, 520), material.IRON, 0);
         shelveStick = new Shelve(new Position(700, 520),material.STICK,0);
         shelves = [shelveWood,shelveStick,shelveMetal];
-        perso = new Perso(350, 520 - 115);
+
+        perso1 = new Perso(350, 520 - 115);
+        console.log(perso1);
+        perso2 = new Perso(350, 330 - 115);
+        console.log(perso2);
+
         anomalys = [new Anomaly(new Position(511, 685), material.EXTINGUISHER, type.BARREL_FIRE),
             new Anomaly(new Position(764, 685), material.EXTINGUISHER, type.BARREL_FIRE),
             new Anomaly(new Position(320, 520), material.EXTINGUISHER, type.BARREL_FIRE),
@@ -128,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function isPossibleToUp() {
+    function isPossibleToUp(perso) {
         for (const echelle of listEchelle) {
             if (echelle.up) {
                 if (echelle.x <= perso.pointRef.x && echelle.x + largeurEchelle >= perso.pointRef.x && echelle.y < perso.pos.y + perso.hauteur) {
@@ -141,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return false;
     }
 
-    function isPossibleToDown() {
+    function isPossibleToDown(perso) {
         for (const echelle of listEchelle) {
             if (echelle.x <= perso.pointRef.x && echelle.x + largeurEchelle >= perso.pointRef.x && echelle.y + hauteurEchelle > perso.pointRef.y && echelle.y <= perso.pointRef.y && perso.pointRef.y < 685) {
                 return true;
@@ -237,7 +245,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    testMurLeft = function () {
+    testMurLeft = function (perso) {
         return ((perso.pointRef.y == validYLines[0] && perso.pos.x > 295) ||
             ((perso.pointRef.y == validYLines[1] && perso.pos.x > 250) &&
                 (perso.pointRef.y == validYLines[1] && ((perso.pos.x) < 709 || perso.pos.x > 711))) ||
@@ -245,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 (perso.pointRef.y == validYLines[2] && ((perso.pos.x) < 824 || perso.pos.x > 826))));
     }
 
-    testMurRight = function () {
+    testMurRight = function (perso) {
         return ((perso.pointRef.y == validYLines[0] && perso.pos.x + perso.largeur < 1100) ||
             ((perso.pointRef.y == validYLines[1] && perso.pos.x + perso.largeur < 1100) &&
                 (perso.pointRef.y == validYLines[1] && ((perso.pos.x + perso.largeur) < 709 || perso.pos.x + perso.largeur > 711))) ||
@@ -258,35 +266,58 @@ document.addEventListener("DOMContentLoaded", function () {
         dt = d - old_date;
         old_date = d;
 
-        if (fleche.gauche == true && isPositionValide("x", perso.pos.x - 1) && validYLines.includes(perso.pointRef.y)) {
-            if (testMurLeft()) {
-                perso.goLeft();
+        if (fleche.gauche == true && isPositionValide("x", perso1.pos.x - 1) && validYLines.includes(perso1.pointRef.y)) {
+            if (testMurLeft(perso1)) {
+                perso1.goLeft();
             }
-
-
         }
-
-        if (fleche.haut == true && isPositionValide("y", perso.pos.y - 1) && isPossibleToUp()) {
-            perso.goUp();
-
-        }
-
-        if (fleche.droite == true && isPositionValide("x", perso.pos.x + 1) && validYLines.includes(perso.pointRef.y)) {
-            if (testMurRight()) {
-                perso.goRight();
+        if (fleche2.gauche == true && isPositionValide("x", perso2.pos.x - 1) && validYLines.includes(perso2.pointRef.y)) {
+            if (testMurLeft(perso2)) {
+                perso2.goLeft();
             }
-
-        }
-
-        if (fleche.bas == true && isPositionValide("y", perso.pos.y + 1) && isPossibleToDown()) {
-            perso.goDown();
-            perso.onALadder = false;
         }
 
 
-        if( (perso.pointRef.y == validYLines[0] || perso.pointRef.y == validYLines[1] || perso.pointRef.y == validYLines[2]) &&  (fleche.droite == false && fleche.gauche == false)){
-        	perso.stoped();
+
+        if (fleche.haut == true && isPositionValide("y", perso1.pos.y - 1) && isPossibleToUp(perso1)) {
+            perso1.goUp();
         }
+        if (fleche2.haut == true && isPositionValide("y", perso2.pos.y - 1) && isPossibleToUp(perso2)) {
+            perso2.goUp();
+        }
+
+
+        if (fleche.droite == true && isPositionValide("x", perso1.pos.x + 1) && validYLines.includes(perso1.pointRef.y)) {
+            if (testMurRight(perso1)) {
+                perso1.goRight();
+            }
+        }
+        if (fleche2.droite == true && isPositionValide("x", perso2.pos.x + 1) && validYLines.includes(perso2.pointRef.y)) {
+            if (testMurRight(perso2)) {
+                perso2.goRight();
+            }
+        }
+
+
+
+        if (fleche.bas == true && isPositionValide("y", perso1.pos.y + 1) && isPossibleToDown(perso1)) {
+            perso1.goDown();
+            perso1.onALadder = false;
+        }
+        if (fleche2.bas == true && isPositionValide("y", perso2.pos.y + 1) && isPossibleToDown(perso2)) {
+            perso2.goDown();
+            perso2.onALadder = false;
+        }
+
+
+        if( (perso1.pointRef.y == validYLines[0] || perso1.pointRef.y == validYLines[1] || perso1.pointRef.y == validYLines[2]) &&  (fleche.droite == false && fleche.gauche == false)){
+        	perso1.stoped();
+        }
+        if( (perso2.pointRef.y == validYLines[0] || perso2.pointRef.y == validYLines[1] || perso2.pointRef.y == validYLines[2]) &&  (fleche2.droite == false && fleche2.gauche == false)){
+        	perso2.stoped();
+        }
+
+
 
         nbFrame += dt;
         if(nbFrame>=1000){
@@ -295,7 +326,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (isSpacebarPressed) {
             isSpacebarPressed = false;
-            executeSpace();
+            executeSpace(perso1);
+
+        }
+
+        if (isSpacebarPressed2) {
+            isSpacebarPressed2 = false;
+            executeSpace(perso2);
 
         }
 
@@ -318,7 +355,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
          inGame = !increaseWaterLevel();
 
-        perso.updatePointRef();
+        perso1.updatePointRef();
+        perso2.updatePointRef();
         moveInWaterSupplies();
 
     };
@@ -330,12 +368,13 @@ document.addEventListener("DOMContentLoaded", function () {
         drawRepareKit();
         drawShelve();
         drawScore();
-        drawPersonage();
+        drawPersonage(perso1);
+        drawPersonage(perso2);
         drawWater();
     };
 
 
-    drawPersonage = function(){
+    function drawPersonage(perso){
 
 		ctx.drawImage(perso.getSprite(dt), perso.pos.x, perso.pos.y, perso.largeur, perso.hauteur);
 		ctx.strokeRect(perso.pos.x, perso.pos.y, perso.largeur, perso.hauteur);
@@ -426,47 +465,75 @@ document.addEventListener("DOMContentLoaded", function () {
             case  32 :
                 isSpacebarPressed = true;
 
+
+            case 81 :
+                fleche2.gauche = true;
+                fleche2.bas = false;
+                fleche2.droite = false;
+                fleche2.haut = false;
+                break;
+            case 90 :
+                fleche2.haut = true;
+                fleche2.gauche = false;
+                fleche2.droite = false;
+                fleche2.bas = false;
+                break;
+            case 68 :
+                fleche2.droite = true;
+                fleche2.gauche = false;
+                fleche2.bas = false;
+                fleche2.haut = false;
+                break;
+            case 83 :
+                fleche2.bas = true;
+                fleche2.gauche = false;
+                fleche2.droite = false;
+                fleche2.haut = false;
+                break;
+            case  69 :
+                isSpacebarPressed2 = true;
+
         }
 
     };
 
-    executeSpace = function () {
+    executeSpace = function (perso) {
         switch (perso.holdType) {
             case material.EMPTY:
-                if (!checkHitBoxShelvesPerso()) {
-                    if (!checkHitBoxMaterialPerso()) {
+                if (!checkHitBoxShelvesPerso(perso)) {
+                    if (!checkHitBoxMaterialPerso(perso)) {
                     }
                 }
                 //checkLeverBrocken
                 //else checkMaterial
                 break;
             case material.EXTINGUISHER :
-                if (!checkHitBoxAnomaliePerso())
-                    if (!checkHitBoxMaterialPerso())
-                        putMaterialKitDown();
+                if (!checkHitBoxAnomaliePerso(perso))
+                    if (!checkHitBoxMaterialPerso(perso))
+                        putMaterialKitDown(perso);
                 break;
             case material.WOOD :
-                if (!checkHitBoxAnomaliePerso()) {
-                    if (!checkHitBoxShelvesPerso()) {
-                        if (!checkHitBoxMaterialPerso()) {
-                            putMaterialKitDown();
+                if (!checkHitBoxAnomaliePerso(perso)) {
+                    if (!checkHitBoxShelvesPerso(perso)) {
+                        if (!checkHitBoxMaterialPerso(perso)) {
+                            putMaterialKitDown(perso);
                         }
                     }
                 }
                 break;
             case material.IRON :
-                if (!checkHitBoxAnomaliePerso()) {
-                    if (!checkHitBoxShelvesPerso()) {
-                        if (!checkHitBoxMaterialPerso())
-                            putMaterialKitDown();
+                if (!checkHitBoxAnomaliePerso(perso)) {
+                    if (!checkHitBoxShelvesPerso(perso)) {
+                        if (!checkHitBoxMaterialPerso(perso))
+                            putMaterialKitDown(perso);
                     }
                 }
                 break;
             case material.STICK :
-                if (!checkHitBoxAnomaliePerso()) {
-                    if (!checkHitBoxShelvesPerso()) {
-                        if (!checkHitBoxMaterialPerso())
-                            putMaterialKitDown();
+                if (!checkHitBoxAnomaliePerso(perso)) {
+                    if (!checkHitBoxShelvesPerso(perso)) {
+                        if (!checkHitBoxMaterialPerso(perso))
+                            putMaterialKitDown(perso);
                     }
                 }
                 break;
@@ -493,15 +560,34 @@ document.addEventListener("DOMContentLoaded", function () {
                 isSpacebarPressed = false;
                 break;
 
+
+
+                //player 2
+            case 90 :
+                fleche2.haut = false;
+                break;
+            case 81 :
+                fleche2.gauche = false;
+                break;
+            case 68 :
+                fleche2.droite = false;
+                break;
+            case 69 :
+             	isSpacebarPressed2 = false;
+             	break;
+            case 83 :
+                fleche2.bas = false;
+                break;
+
         }
     };
 
-    putMaterialKitDown = function () {
+    putMaterialKitDown = function (perso) {
         repaireKits.push(new RepareKit(perso.pointRef, perso.holdType));
         perso.holdType = material.EMPTY;
     };
 
-    checkHitBoxAnomaliePerso = function () {
+    checkHitBoxAnomaliePerso = function (perso) {
         for (const anomaly of anomalys) {
             if (!anomaly.isBroken) continue;
             if (anomaly.position.y !== perso.pointRef.y || anomaly.position.x > perso.pos.x + perso.largeur ||
@@ -512,7 +598,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return false
     };
 
-    checkHitBoxShelvesPerso = function () {
+    checkHitBoxShelvesPerso = function (perso) {
         for (const shelve of shelves) {
             if (perso.pointRef.y !== 520 ||
                 shelve.position.x > perso.pos.x + perso.largeur || shelve.position.x + shelve.width < perso.pos.x) continue;
@@ -520,7 +606,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    checkHitBoxMaterialPerso = function () {
+    checkHitBoxMaterialPerso = function (perso) {
         for (const repaireKit of repaireKits) {
             if (repaireKit.position.y !== perso.pointRef.y || repaireKit.position.x > perso.pos.x + perso.largeur ||
                 repaireKit.position.x + repaireKit.width < perso.pos.x) continue;

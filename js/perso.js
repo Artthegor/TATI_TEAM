@@ -50,6 +50,32 @@ class Perso {
 		this.spritesPersoD[7] = new Image();
 		this.spritesPersoD[7].src = "images/persoD7.png";
 
+		//gauche
+		this.spritesPersoG = new Array(8);
+		this.spritesPersoG[0] = new Image();
+		this.spritesPersoG[0].src = "images/persoG0.png";
+
+		this.spritesPersoG[1] = new Image();
+		this.spritesPersoG[1].src = "images/persoG1.png";
+
+		this.spritesPersoG[2] = new Image();
+		this.spritesPersoG[2].src = "images/persoG2.png";
+
+		this.spritesPersoG[3] = new Image();
+		this.spritesPersoG[3].src = "images/persoG3.png";
+
+		this.spritesPersoG[4] = new Image();
+		this.spritesPersoG[4].src = "images/persoG4.png";
+
+		this.spritesPersoG[5] = new Image();
+		this.spritesPersoG[5].src = "images/persoG5.png";
+
+		this.spritesPersoG[6] = new Image();
+		this.spritesPersoG[6].src = "images/persoG6.png";
+
+		this.spritesPersoG[7] = new Image();
+		this.spritesPersoG[7].src = "images/persoG7.png";
+
 		//de face
 		this.persoFront = new Image();
 		this.persoFront.src = "images/persoFront.png";
@@ -102,8 +128,8 @@ class Perso {
     			return this.persoFront;
     			break;
     		case "left":
-    			this.incrementTime(time, this.spritesPersoD.length);
-    			return this.spritesPersoD[this.indexFrame];
+    			this.incrementTime(time, this.spritesPersoG.length);
+    			return this.spritesPersoG[this.indexFrame];
     			break;
     		case "right":
     			this.incrementTime(time, this.spritesPersoD.length);
