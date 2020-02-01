@@ -82,7 +82,7 @@ class Perso {
                 this.holdType = material.IRON;
                 break;
             case "extinguisher" :
-ad                //change sprite to extinguisher holder
+               //change sprite to extinguisher holder
                 break;
             case "stick" :
                 //change sprite to stick holder
