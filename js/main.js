@@ -464,6 +464,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 break;
             case  32 :
                 isSpacebarPressed = true;
+                break;
 
 
             case 81 :
@@ -492,6 +493,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 break;
             case  69 :
                 isSpacebarPressed2 = true;
+                break;
 
         }
 
