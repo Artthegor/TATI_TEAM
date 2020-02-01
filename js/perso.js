@@ -153,12 +153,12 @@ class Perso {
     }
 
     goLeft() {
-        this.pos.x -= 1;
+        this.pos.x -= 1.5;
         this.direction = this.ORIENTATION.LEFT;
     }
 
     goRight() {
-        this.pos.x += 1;
+        this.pos.x += 1.5;
         this.direction = this.ORIENTATION.RIGHT;
     }
 
@@ -175,9 +175,7 @@ class Perso {
     }
 
     takeObject(obj) {
-        if (this.holdType != material.EMPTY) {
-            //faire quelque chose avec l'objet tenu
-        }
+
         switch (obj.type) {
             case "wood":
                 //change sprite to wood holder
@@ -200,11 +198,11 @@ class Perso {
     }
 
     repair(anoma) {
-
-        if (this.holdType === anoma.type) {
+        if (this.holdType === anoma.idMaterialRepair) {
+            console.log("repare");
 			anoma.repaired();
+			this.holdType = material.EMPTY;
         }
-
     }
 
 }

@@ -4,11 +4,14 @@ class Anomaly {
         broken: "",
         notBroken: ""
     };
+
     constructor(position, materialRepair, type) {
         this.position = position;
         this.type = type;
         this.idMaterialRepair = materialRepair;
         this.isBroken = false;
+        this.width = 10;
+        this.height = 10;
     }
 
     get sprite(){
