@@ -5,6 +5,8 @@ var old_date = Date.now();
 var perso;
 var fleche = {haut: false, bas: false, gauche: false, droite:false};
 var anomaly;
+var listEchelle = [{x : 150, y : 20}, {x : 80, y : 150}];
+var hauteurEchelle = 80;
 
 document.addEventListener("DOMContentLoaded", function(){
 
@@ -22,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function(){
 		anomaly = [   new Anomaly(new Position(0,1),material.EXTINGUISHER,type.BARREL_FIRE),
 			new Anomaly(new Position(50,50),material.IRON,type.PIPE),
 			new Anomaly(new Position(75,25),material.WOOD,type.LEAK)];
-		perso = new Perso(50, 50);
+		perso = new Perso(50, 90);
 		gameLoop();
 
 	}
@@ -39,6 +41,30 @@ document.addEventListener("DOMContentLoaded", function(){
 				break;
 		}
 
+	}
+
+	function isPossibleToUp(){
+		console.log("ttttttt");
+		console.log(perso.pos);
+		for (const echelle of listEchelle){
+			if(echelle.x <= perso.pos.x && echelle.x + 20 > perso.pos.x && echelle.y < perso.pos.y){
+				console.log(echelle);
+				return true;
+			}
+		}
+		
+		return false;
+	}
+
+	function isPossibleToDown(){
+		for (const echelle of listEchelle){
+			if(echelle.x <= perso.pos.x && echelle.x + 20 > perso.pos.x && echelle.y+hauteurEchelle >= perso.pos.y){
+				console.log(echelle);
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 
@@ -70,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	       			
     	}
 
-	    if (fleche.haut == true && isPositionValide("y",perso.pos.y-1) ) {
+	    if (fleche.haut == true && isPositionValide("y",perso.pos.y-1) && isPossibleToUp()) {
 	    	console.log('Up was pressed');
 	       	perso.goUp();
 	       			
@@ -81,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function(){
 	       	perso.goRight();
 	    }	
 
-	    if (fleche.bas == true && isPositionValide("y",perso.pos.y+1)) {
+	    if (fleche.bas == true && isPositionValide("y",perso.pos.y+1) && isPossibleToDown()) {
 			console.log('down was pressed');
 	       	perso.goDown();
 	    }
@@ -108,6 +134,8 @@ document.addEventListener("DOMContentLoaded", function(){
 		
 		
 		ctx.strokeRect(perso.pos.x, perso.pos.y, 25, 50);
+		ctx.strokeStyle = '#888888';
+		ctx.strokeRect(150, 20, 20, 80);
 	};
 	
 
