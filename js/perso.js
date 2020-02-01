@@ -3,7 +3,8 @@ class Perso {
 HOLDING={
 		EMPTY : 'empty',
 		WOOD : 'wood',
-		IRON : 'iron'
+		IRON : 'iron',
+		EXTINGUISHER: 'extinguisher'
 	};
 
 ORIENTATION={
@@ -65,13 +66,18 @@ ORIENTATION={
 			this.holdType=this.HOLDING.WOOD;
 			break;
 			case "iron":
-			//change sprite to wood holder
+			//change sprite to iron holder
 			this.holdType=this.HOLDING.IRON;
 			break;
+			case "extinguisher" :
 			default:
 			break;
 
 		}
+	}
+
+	repair(anoma){
+
 	}
 
 }

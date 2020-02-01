@@ -1,3 +1,10 @@
+@font-face {
+    font-family: 'steamy';
+    src: url('steamy.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
 #content {
     position: relative;
     width: 1400px;
@@ -15,4 +22,14 @@
     background-image: url("../images/bateau.png");
 }
 
-
+#content #score {
+    border: solid 1px #000;
+    width: 200px;
+    height: 55px;
+    position: absolute;
+    top: -50px;
+    left: 1200px;
+    text-align: right;
+    font-family:steamy, sans-serif;
+    font-size:50px;
+}
