@@ -12,11 +12,17 @@ var isSpacebarPressed = false;
 var anomalys;
 var repaireKits;
 var shelveWood;
+var shelveStick;
+var shelveMetal;
 var shelves;
 var incrementTime = 0;
 var probaAparitionEvent = 0.3;
 var score = 0;
 var eventApparitionTrigger = 10000;
+var incrementTimeSupplies =0;
+var eventSuppliesApparitionTrigger = 3000;
+var probaSuppliesApparition =0.8;
+
 var lastTime = 0;
 var thisTime = 0;
 var spritePerso = new Image();
@@ -98,12 +104,14 @@ document.addEventListener("DOMContentLoaded", function () {
         anoDestroy.destroy();
 
         repaireKits = [];
-        shelveWood = new Shelve(new Position(500, 520), material.WOOD, 2);
-        shelves = [shelveWood];
+        shelveWood = new Shelve(new Position(500, 520), material.WOOD, 0);
+        shelveMetal = new Shelve(new Position(600, 520), material.IRON, 0);
+        shelveStick = new Shelve(new Position(700, 520),material.STICK,0);
+        shelves = [shelveWood,shelveStick,shelveMetal];
         perso = new Perso(350, 520 - 110);
-        anomalys = [new Anomaly(new Position(666, 666), material.EXTINGUISHER, type.BARREL_FIRE),
-            new Anomaly(new Position(500, 150), material.IRON, type.PIPE),
-            new Anomaly(new Position(750, 250), material.WOOD, type.LEAK)];
+        anomalys = [new Anomaly(new Position(666, 520), material.EXTINGUISHER, type.BARREL_FIRE),
+            new Anomaly(new Position(500, 330), material.IRON, type.PIPE),
+            new Anomaly(new Position(750, 520), material.WOOD, type.LEAK)];
         navigator.geolocation.getCurrentPosition(success, error, options);
         gameLoop();
 
@@ -182,6 +190,59 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
+    moveInWaterSupplies = function (){
+        for(var kit of repaireKits){
+            if(kit.position.x >1150){
+                kit.position = new Position(kit.position.x-1,waterLevel +50);
+            }
+            else {
+                if (kit.position.x === 1150){
+                    switch(kit.material){
+                        case material.STICK :
+                            shelveStick.nbMaterialKit++;
+
+                            break;
+                        case material.IRON :
+                            shelveMetal.nbMaterialKit++;
+                            break;
+                        case material.WOOD :
+                            shelveWood.nbMaterialKit++;
+                            break;
+                        default:
+                    }
+                    repaireKits.splice(repaireKits.indexOf(kit),1);
+                }
+            }
+        }
+    };
+
+    randomlyAppearsSupplies = function () {
+        if (Math.random() < probaSuppliesApparition) {
+            var index = Math.floor(Math.random() * 3);
+            switch(index){
+                case 0 :
+                    var r1 = new RepareKit(new Position(1400,waterLevel+50),material.WOOD);
+                    repaireKits.push(r1);
+                    break;
+                case 1 :
+                    var r1 = new RepareKit(new Position(1400,waterLevel+50),material.IRON);
+                    repaireKits.push(r1);
+                    break;
+                case 2 :
+                    var r1 = new RepareKit(new Position(1400,waterLevel+50),material.STICK);
+                    repaireKits.push(r1);
+                    break;
+                default:
+                    break;
+
+            }
+            probaSuppliesApparition -= 0.05;
+        }
+        else {
+            probaSuppliesApparition +=0.05;
+        }
+    };
+
     testMurLeft = function () {
         return ((perso.pointRef.y == validYLines[0] && perso.pos.x > 295) ||
             ((perso.pointRef.y == validYLines[1] && perso.pos.x > 250) &&
@@ -246,7 +307,11 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         incrementTime += dt;
-
+        incrementTimeSupplies += dt;
+        if(incrementTimeSupplies > eventSuppliesApparitionTrigger){
+            incrementTimeSupplies=0;
+            randomlyAppearsSupplies();
+        }
         if (incrementTime > eventApparitionTrigger) {
             incrementTime = 0;
             randomlyCreateAnomaly();
@@ -254,6 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
          inGame = !increaseWaterLevel();
 
         perso.updatePointRef();
+        moveInWaterSupplies();
 
     };
 
