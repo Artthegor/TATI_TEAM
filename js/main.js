@@ -66,27 +66,23 @@ document.addEventListener("DOMContentLoaded", function(){
 
 		if (fleche.gauche == true && isPositionValide("x",perso.pos.x-1)) {
 			console.log('Left was pressed');
-			console.log(perso.pos);
 			perso.goLeft();
 	       			
     	}
 
 	    if (fleche.haut == true && isPositionValide("y",perso.pos.y-1) ) {
 	    	console.log('Up was pressed');
-	       	console.log(perso.pos);
 	       	perso.goUp();
 	       			
 	    }
 
 	    if (fleche.droite == true && isPositionValide("x",perso.pos.x+1)) {
 			console.log('droite was pressed');
-	       	console.log(perso.pos);
 	       	perso.goRight();
 	    }	
 
 	    if (fleche.bas == true && isPositionValide("y",perso.pos.y+1)) {
 			console.log('down was pressed');
-	       	console.log(perso.pos);
 	       	perso.goDown();
 	    }
 		
