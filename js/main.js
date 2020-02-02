@@ -115,18 +115,15 @@ document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("keydown", captureAppuiToucheClavier);
         document.addEventListener("keyup", captureRelacheToucheClavier);
 
-        let anoDestroy = new Anomaly(new Position(300, 520), material.WOOD, type.LEAK);
-        anoDestroy.destroy();
-
-        repaireKits = [];
+        repaireKits = [new RepareKit(new Position(413,320),material.EXTINGUISHER)];
         shelveWood = new Shelve(new Position(750, 520), material.WOOD, 0);
         shelveMetal = new Shelve(new Position(870, 520), material.IRON, 0);
         shelveStick = new Shelve(new Position(1020, 520), material.STICK, 0);
         shelves = [shelveWood, shelveStick, shelveMetal];
 
-        perso1 = new Perso(350, 520 - 115);
+        perso1 = new Perso(350, 520 - 120, 1);
         if (nbJoueur == 2) {
-            perso2 = new Perso(350, 330 - 115);
+            perso2 = new Perso(350, 330 - 120, 2);
         }
 
 
@@ -403,7 +400,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     render = function () {
         ctx.clearRect(0, 0, ctx.width, ctx.height);
-        drawEchelle();
         drawAnomaly();
         drawRepareKit(dt);
         drawShelve();
@@ -420,20 +416,11 @@ document.addEventListener("DOMContentLoaded", function () {
     function drawPersonage(perso) {
 
         ctx.drawImage(perso.getSprite(dt), perso.pos.x, perso.pos.y, perso.largeur, perso.hauteur);
-        ctx.strokeRect(perso.pos.x, perso.pos.y, perso.largeur, perso.hauteur);
 
 
     }
 
-    drawEchelle = function () {
-        ctx.strokeStyle = '#888888';
-
-
-        for (const echelle of listEchelle) {
-            ctx.strokeRect(echelle.x, echelle.y, largeurEchelle, hauteurEchelle);
-        }
-    };
-
+   
     drawAnomaly = function () {
         for (const anomaly of this.anomalys) {
             if (anomaly.isBroken) {
@@ -547,9 +534,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 break;
             case material.EXTINGUISHER :
-                if (!checkHitBoxAnomaliePerso(perso))
-                    if (!checkHitBoxMaterialPerso(perso))
-                        putMaterialKitDown(perso);
+                if (!checkHitBoxAnomaliePerso(perso)) {
+                    if (!checkHitBoxShelvesPerso(perso)) {
+                        if (!checkHitBoxMaterialPerso(perso)) {
+                            putMaterialKitDown(perso);
+                        }
+                    }
+                }
                 break;
             case material.WOOD :
                 if (!checkHitBoxAnomaliePerso(perso)) {
@@ -664,6 +655,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 repaireKit.position.x + repaireKit.width < perso.pos.x) continue;
             if (perso.holdType === material.EMPTY) {
                 repaireKits.splice(repaireKits.indexOf(repaireKit), 1);
+                console.log(repaireKits);
+                console.log(perso);
+
                 perso.takeObject(repaireKit);
                 perso.holdType = repaireKit.material;
                 soundTakeItem.play();
