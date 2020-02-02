@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("keydown", captureAppuiToucheClavier);
         document.addEventListener("keyup", captureRelacheToucheClavier);
 
-        repaireKits = [new RepareKit(new Position(413,320),material.EXTINGUISHER)];
+        repaireKits = [new RepareKit(new Position(413,330),material.EXTINGUISHER)];
         shelveWood = new Shelve(new Position(750, 520), material.WOOD, 0);
         shelveMetal = new Shelve(new Position(870, 520), material.IRON, 0);
         shelveStick = new Shelve(new Position(1020, 520), material.STICK, 0);
@@ -645,7 +645,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 repaireKits.splice(repaireKits.indexOf(repaireKit), 1);
                 console.log(repaireKit);
                 console.log(perso);
-                console
 
                 perso.takeObject(repaireKit);
                 perso.holdType = repaireKit.material;
