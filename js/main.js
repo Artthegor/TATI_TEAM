@@ -47,6 +47,10 @@ var options = {
 
 var nbJoueur = 1;
 
+var snd1;
+var soundTakeItem;
+var soundMusic;
+
 function success(pos) {
     getWeather(pos.coords.latitude, pos.coords.longitude);
 }
@@ -111,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("keydown", captureAppuiToucheClavier);
         document.addEventListener("keyup", captureRelacheToucheClavier);
 
-        repaireKits = [new RepareKit(new Position(413,320),material.EXTINGUISHER)];
+        repaireKits = [new RepareKit(new Position(413,330),material.EXTINGUISHER)];
         shelveWood = new Shelve(new Position(750, 520), material.WOOD, 0);
         shelveMetal = new Shelve(new Position(870, 520), material.IRON, 0);
         shelveStick = new Shelve(new Position(1020, 520), material.STICK, 0);
@@ -138,6 +142,12 @@ document.addEventListener("DOMContentLoaded", function () {
             new Anomaly(new Position(1100, 320), material.STICK, type.HELM),
         ];
         navigator.geolocation.getCurrentPosition(success, error, options);
+
+        snd1 = new Audio();
+        soundTakeItem = new Sound("sound/arrow4.mp3");
+        soundMusic = new Sound("music/Theme_principal_v2.mp3");
+        soundMusic.play();
+
 
         gameLoop();
 
@@ -193,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
         for (const anomaly of anomalys) {
             if (anomaly.isBroken) nbAnomaly++;
         }
-        waterLevel -= nbAnomaly * 0;
+        waterLevel -= nbAnomaly * 0.01;
         return waterLevel <= 250;
 
     };
@@ -202,7 +212,7 @@ document.addEventListener("DOMContentLoaded", function () {
     randomlyCreateAnomaly = function () {
         if (Math.random() < probaAparitionEvent) {
             var index = Math.floor(Math.random() * this.anomalys.length);
-            anomalys[index].isBroken = true;
+            anomalys[index].destroy();
             if (Math.random() > 0.5) {
                 probaAparitionEvent += 0.05;
             } else if (eventApparitionTrigger > 1000) {
@@ -220,7 +230,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     switch (kit.material) {
                         case material.STICK :
                             shelveStick.addItem();
-
                             break;
                         case material.IRON :
                             shelveMetal.addItem();
@@ -625,29 +634,35 @@ document.addEventListener("DOMContentLoaded", function () {
                 shelve.position.x > perso.pos.x + perso.largeur || shelve.position.x + shelve.width < perso.pos.x) continue;
             if (perso.holdType === shelve.materialType) {
                 if (shelve.addItem()) {
+                    soundTakeItem.play();
                     perso.holdType = material.EMPTY;
                 }
                 return true;
             } else if (perso.holdType === material.EMPTY) {
-                return shelve.takeItem(perso);
+                if (shelve.takeItem(perso)){
+                    soundTakeItem.play();
+                    return true;
+                }
+                return false;
             }
             return false;
         }
     };
 
     checkHitBoxMaterialPerso = function (perso) {
+        console.log(perso);
+        console.log(repaireKits);
         for (const repaireKit of repaireKits) {
             if (repaireKit.position.y !== perso.pointRef.y || repaireKit.position.x > perso.pos.x + perso.largeur ||
                 repaireKit.position.x + repaireKit.width < perso.pos.x) continue;
             if (perso.holdType === material.EMPTY) {
                 repaireKits.splice(repaireKits.indexOf(repaireKit), 1);
-                console.log(repaireKits);
+                console.log(repaireKit);
                 console.log(perso);
 
                 perso.takeObject(repaireKit);
                 perso.holdType = repaireKit.material;
-                console.log(perso.holdType);
-                console.log(repaireKit.material);
+                soundTakeItem.play();
                 return true;
             }
         }
@@ -656,7 +671,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById('btn1j').onclick = function () {
         init(1);
-    }
+    };
     document.getElementById('btn2j').onclick = function () {
         init(2);
     }
