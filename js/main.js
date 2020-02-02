@@ -1,4 +1,4 @@
-//Var
+//Var #TATIVAR(83)
 var ctx = null;
 var inGame = true;
 var old_date = Date.now();
