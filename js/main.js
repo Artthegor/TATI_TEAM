@@ -24,8 +24,8 @@ var shelveMetal;
 var shelves;
 var incrementTime = 0;
 var score = 0;
-var probaAparitionEvent = 0.3;
-var eventApparitionTrigger = 10000;
+var probaAparitionEvent = 0.4;
+var eventApparitionTrigger = 5000;
 var nbFrame = 0;
 var dt = 0;
 var incrementTimeSupplies = 0;
@@ -143,7 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
             new Anomaly(new Position(845, 685), material.WOOD, type.LEAK),
             new Anomaly(new Position(370, 320), material.IRON, type.PIPE),
             new Anomaly(new Position(680, 320), material.IRON, type.PIPE),
-            new Anomaly(new Position(1100, 320), material.STICK, type.HELM),
+            new Anomaly(new Position(1070, 320), material.STICK, type.HELM),
         ];
         navigator.geolocation.getCurrentPosition(success, error, options);
 
@@ -494,16 +494,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-   
+
     drawAnomaly = function () {
         for (const anomaly of this.anomalys) {
-            if (anomaly.isBroken) {
+            var offset=-50
+            var right = -30;
                 ctx.beginPath();
                 ctx.lineWidth = "2";
                 ctx.arc(anomaly.position.x, anomaly.position.y, 10, 0, 2 * Math.PI);
-                ctx.fillStyle = anomaly.sprite.defaul;
+                ctx.fillStyle = "#FF4422";
                 ctx.fill();
+                if(anomaly.type=== type.HELM ||anomaly.type=== type.LEVER) {
+                    offset = 16;
+                    right =0;
+                }
+            if (anomaly.isBroken) {
+                ctx.drawImage(anomaly.sprite.broken, anomaly.position.x - anomaly.sprite.broken.width/2+right, anomaly.position.y - anomaly.sprite.broken.height + offset);
+            } else {
+                if (anomaly.sprite.notBroken.src !== "") {
+                    ctx.drawImage(anomaly.sprite.notBroken, anomaly.position.x - anomaly.sprite.notBroken.width/2+right, anomaly.position.y - anomaly.sprite.notBroken.height + offset);
+                }
             }
+
         }
     };
 
