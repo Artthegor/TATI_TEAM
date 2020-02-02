@@ -99,15 +99,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //init du jeu
     function init(n) {
-    	nbJoueur = n;
-    	document.getElementById("menu").style.display = 'none';
-    	document.getElementById("content").style.display = 'block';
+        nbJoueur = n;
+        document.getElementById("menu").style.display = 'none';
+        document.getElementById("content").style.display = 'block';
 
         ctx = document.getElementById("zoneJeu").getContext("2d");
         ctx.width = document.getElementById("zoneJeu").width;
         ctx.height = document.getElementById("zoneJeu").height;
-
-        
 
 
         document.addEventListener("keydown", captureAppuiToucheClavier);
@@ -123,13 +121,13 @@ document.addEventListener("DOMContentLoaded", function () {
         shelves = [shelveWood, shelveStick, shelveMetal];
 
         perso1 = new Perso(350, 520 - 115);
-        if(nbJoueur == 2){
-        	perso2 = new Perso(350, 330 - 115);
+        if (nbJoueur == 2) {
+            perso2 = new Perso(350, 330 - 115);
         }
-        
+
 
         anomalys = [new Anomaly(new Position(245, 520), material.EXTINGUISHER, type.BARREL_FIRE),
-            new Anomaly(new Position(70, 685), material.EXTINGUISHER, type.BARREL_FIRE),
+            new Anomaly(new Position(710, 685), material.EXTINGUISHER, type.BARREL_FIRE),
             new Anomaly(new Position(440, 685), material.EXTINGUISHER, type.BARREL_FIRE),
             new Anomaly(new Position(445, 520), material.EXTINGUISHER, type.ENGINE_FIRE),
             new Anomaly(new Position(370, 520), material.IRON, type.PIPE),
@@ -198,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
         for (const anomaly of anomalys) {
             if (anomaly.isBroken) nbAnomaly++;
         }
-        waterLevel -= nbAnomaly * 0.1;
+        waterLevel -= nbAnomaly * 0;
         return waterLevel <= 250;
 
     };
@@ -305,7 +303,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-     	if (fleche.bas == true && isPositionValide("y", perso1.pos.y + 1) && isPossibleToDown(perso1)) {
+        if (fleche.bas == true && isPositionValide("y", perso1.pos.y + 1) && isPossibleToDown(perso1)) {
             perso1.goDown();
             perso1.onALadder = false;
         }
@@ -315,40 +313,35 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         //joueur2
-        if(nbJoueur == 2){
-        	if (fleche2.gauche == true && isPositionValide("x", perso2.pos.x - 1) && validYLines.includes(perso2.pointRef.y)) {
-	            if (testMurLeft(perso2)) {
-	                perso2.goLeft();
-	            }
-	        }
+        if (nbJoueur == 2) {
+            if (fleche2.gauche == true && isPositionValide("x", perso2.pos.x - 1) && validYLines.includes(perso2.pointRef.y)) {
+                if (testMurLeft(perso2)) {
+                    perso2.goLeft();
+                }
+            }
 
-	        if (fleche2.haut == true && isPositionValide("y", perso2.pos.y - 1) && isPossibleToUp(perso2)) {
-	            perso2.goUp();
-	        }
-
-
-	        
-	        if (fleche2.droite == true && isPositionValide("x", perso2.pos.x + 1) && validYLines.includes(perso2.pointRef.y)) {
-	            if (testMurRight(perso2)) {
-	                perso2.goRight();
-	            }
-	        }
+            if (fleche2.haut == true && isPositionValide("y", perso2.pos.y - 1) && isPossibleToUp(perso2)) {
+                perso2.goUp();
+            }
 
 
-	       
-	        if (fleche2.bas == true && isPositionValide("y", perso2.pos.y + 1) && isPossibleToDown(perso2)) {
-	            perso2.goDown();
-	            perso2.onALadder = false;
-	        }
+            if (fleche2.droite == true && isPositionValide("x", perso2.pos.x + 1) && validYLines.includes(perso2.pointRef.y)) {
+                if (testMurRight(perso2)) {
+                    perso2.goRight();
+                }
+            }
 
 
-	        
-	        if ((perso2.pointRef.y == validYLines[0] || perso2.pointRef.y == validYLines[1] || perso2.pointRef.y == validYLines[2]) && (fleche2.droite == false && fleche2.gauche == false)) {
-	            perso2.stoped();
-	        }
+            if (fleche2.bas == true && isPositionValide("y", perso2.pos.y + 1) && isPossibleToDown(perso2)) {
+                perso2.goDown();
+                perso2.onALadder = false;
+            }
+
+
+            if ((perso2.pointRef.y == validYLines[0] || perso2.pointRef.y == validYLines[1] || perso2.pointRef.y == validYLines[2]) && (fleche2.droite == false && fleche2.gauche == false)) {
+                perso2.stoped();
+            }
         }
-
-        
 
 
         nbFrame += dt;
@@ -362,14 +355,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-        if(nbJoueur==2){
-        	if (isSpacebarPressed2) {
-	            isSpacebarPressed2 = false;
-	            executeSpace(perso2);
+        if (nbJoueur == 2) {
+            if (isSpacebarPressed2) {
+                isSpacebarPressed2 = false;
+                executeSpace(perso2);
 
-	        }
+            }
         }
-        
+
 
         thisTime += dt;
         if (lastTime + 333 < thisTime) {
@@ -391,10 +384,10 @@ document.addEventListener("DOMContentLoaded", function () {
         inGame = !increaseWaterLevel();
 
         perso1.updatePointRef();
-        if(nbJoueur==2){
-        	perso2.updatePointRef();
+        if (nbJoueur == 2) {
+            perso2.updatePointRef();
         }
-        
+
         moveInWaterSupplies();
 
     };
@@ -407,10 +400,10 @@ document.addEventListener("DOMContentLoaded", function () {
         drawShelve();
         drawScore();
         drawPersonage(perso1);
-        if(nbJoueur==2){
-        	drawPersonage(perso2);
+        if (nbJoueur === 2) {
+            drawPersonage(perso2);
         }
-        
+
         drawWater();
     };
 
@@ -421,7 +414,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ctx.strokeRect(perso.pos.x, perso.pos.y, perso.largeur, perso.hauteur);
 
 
-    };
+    }
 
     drawEchelle = function () {
         ctx.strokeStyle = '#888888';
@@ -430,7 +423,7 @@ document.addEventListener("DOMContentLoaded", function () {
         for (const echelle of listEchelle) {
             ctx.strokeRect(echelle.x, echelle.y, largeurEchelle, hauteurEchelle);
         }
-    }
+    };
 
     drawAnomaly = function () {
         for (const anomaly of this.anomalys) {
@@ -438,7 +431,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 ctx.beginPath();
                 ctx.lineWidth = "2";
                 ctx.arc(anomaly.position.x, anomaly.position.y, 10, 0, 2 * Math.PI);
-                ctx.fillStyle = "#FF4422";
+                ctx.fillStyle = anomaly.sprite.defaul;
                 ctx.fill();
             }
         }
@@ -466,11 +459,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     drawRepareKit = function () {
         for (const repaireKit of repaireKits) {
-            ctx.beginPath();
-            ctx.lineWidth = "2";
-            ctx.arc(repaireKit.position.x, repaireKit.position.y, repaireKit.width, 0, 2 * Math.PI);
-            ctx.fillStyle = "#2fff2b";
-            ctx.fill();
+            ctx.drawImage(repaireKit.sprite, repaireKit.position.x - repaireKit.width/2, repaireKit.position.y - repaireKit.height, repaireKit.width, repaireKit.height);
+            // ctx.beginPath();
+            // ctx.lineWidth = "2";
+            // ctx.arc(repaireKit.position.x, repaireKit.position.y, repaireKit.width, 0, 2 * Math.PI);
+            // ctx.fillStyle = "#2fff2b";
+            // ctx.fill();
         }
     };
 
@@ -644,12 +638,13 @@ document.addEventListener("DOMContentLoaded", function () {
             if (perso.pointRef.y !== 520 ||
                 shelve.position.x > perso.pos.x + perso.largeur || shelve.position.x + shelve.width < perso.pos.x) continue;
             if (perso.holdType === shelve.materialType) {
-                if(shelve.addItem()) {
+                if (shelve.addItem()) {
                     perso.holdType = material.EMPTY;
                 }
                 return true;
+            } else if (perso.holdType === material.EMPTY) {
+                return shelve.takeItem(perso);
             }
-            else if (perso.holdType === material.EMPTY){return shelve.takeItem(perso);}
             return false;
         }
     };
@@ -668,11 +663,11 @@ document.addEventListener("DOMContentLoaded", function () {
         return false
     };
 
-    document.getElementById('btn1j').onclick = function(){
-    	init(1);
+    document.getElementById('btn1j').onclick = function () {
+        init(1);
     }
-    document.getElementById('btn2j').onclick = function(){
-    	init(2);
+    document.getElementById('btn2j').onclick = function () {
+        init(2);
     }
 
 });

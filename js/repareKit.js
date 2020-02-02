@@ -1,11 +1,13 @@
 class RepareKit {
-    sprite= "";
+    sprite;
 
     constructor(position, material) {
         this.position = new Position(position.x, position.y);
         this.material = material;
-        this.width = 10;
-        this.height = 10;
+        this.width = 34;
+        this.height = 24;
+        this.sprite = new Image();
+        this.initSprite();
     }
 
     get sprite(){
@@ -15,16 +17,16 @@ class RepareKit {
     initSprite() {
         switch (this.material) {
             case material.STICK:
-                this.sprite = "";
+                this.sprite.src = "images/baton.png";
                 break;
             case material.IRON:
-                this.sprite = "";
+                this.sprite.src = "images/metal.png";
                 break;
             case material.WOOD:
-                this.sprite = "";
+                this.sprite.src = "images/planche.png";
                 break;
             case material.EXTINGUISHER:
-                this.sprite = "";
+                this.sprite.src = "images/bateau.png";
                 break;
             default:
         }
