@@ -636,13 +636,16 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     checkHitBoxMaterialPerso = function (perso) {
+        console.log(perso);
+        console.log(repaireKits);
         for (const repaireKit of repaireKits) {
             if (repaireKit.position.y !== perso.pointRef.y || repaireKit.position.x > perso.pos.x + perso.largeur ||
                 repaireKit.position.x + repaireKit.width < perso.pos.x) continue;
             if (perso.holdType === material.EMPTY) {
                 repaireKits.splice(repaireKits.indexOf(repaireKit), 1);
-                console.log(repaireKits);
+                console.log(repaireKit);
                 console.log(perso);
+                console
 
                 perso.takeObject(repaireKit);
                 perso.holdType = repaireKit.material;
