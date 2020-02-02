@@ -786,8 +786,12 @@ class Perso {
         if (this.holdType === anoma.idMaterialRepair) {
             console.log("repare");
 			anoma.repaired();
-			// if (!this.holdType === material.EXTINGUISHER)
+			if (this.holdType === material.EXTINGUISHER){
+				this.holdType = material.EXTINGUISHER;
+			} else {
 				this.holdType = material.EMPTY;
+			}
+			return false;
         }
     }
 

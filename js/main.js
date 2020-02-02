@@ -358,7 +358,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     testMurLeft = function (perso) {
         return ((perso.pointRef.y == validYLines[0] && perso.pos.x > 271) ||
-            ((perso.pointRef.y == validYLines[1] && perso.pos.x > 210) &&
+            ((perso.pointRef.y == validYLines[1] && perso.pos.x > 175) &&
                 (perso.pointRef.y == validYLines[1] && ((perso.pos.x) < 709 || perso.pos.x > 711))) ||
             ((perso.pointRef.y == validYLines[2] && perso.pos.x > 410) &&
                 (perso.pointRef.y == validYLines[2] && ((perso.pos.x) < 824 || perso.pos.x > 826))));
