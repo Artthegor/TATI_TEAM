@@ -112,6 +112,172 @@ class Perso {
 			this.spritesPersoB[7] = new Image();
 			this.spritesPersoB[7].src = "images/persoB1.png";
 
+			////////// STICK
+
+			//gauche
+			this.spritesPersoGBaton = new Array(8);
+			this.spritesPersoGBaton[0] = new Image();
+			this.spritesPersoGBaton[0].src = "images/persoGBaton0.png";
+
+			this.spritesPersoGBaton[1] = new Image();
+			this.spritesPersoGBaton[1].src = "images/persoGBaton1.png";
+
+			this.spritesPersoGBaton[2] = new Image();
+			this.spritesPersoGBaton[2].src = "images/persoGBaton2.png";
+
+			this.spritesPersoGBaton[3] = new Image();
+			this.spritesPersoGBaton[3].src = "images/persoGBaton3.png";
+
+			this.spritesPersoGBaton[4] = new Image();
+			this.spritesPersoGBaton[4].src = "images/persoGBaton4.png";
+
+			this.spritesPersoGBaton[5] = new Image();
+			this.spritesPersoGBaton[5].src = "images/persoGBaton5.png";
+
+			this.spritesPersoGBaton[6] = new Image();
+			this.spritesPersoGBaton[6].src = "images/persoGBaton6.png";
+
+			this.spritesPersoGBaton[7] = new Image();
+			this.spritesPersoGBaton[7].src = "images/persoGBaton7.png";
+
+			//droite
+			this.spritesPersoDBaton = new Array(8);
+			this.spritesPersoDBaton[0] = new Image();
+			this.spritesPersoDBaton[0].src = "images/persoDBaton0.png";
+
+			this.spritesPersoDBaton[1] = new Image();
+			this.spritesPersoDBaton[1].src = "images/persoDBaton1.png";
+
+			this.spritesPersoDBaton[2] = new Image();
+			this.spritesPersoDBaton[2].src = "images/persoDBaton2.png";
+
+			this.spritesPersoDBaton[3] = new Image();
+			this.spritesPersoDBaton[3].src = "images/persoDBaton3.png";
+
+			this.spritesPersoDBaton[4] = new Image();
+			this.spritesPersoDBaton[4].src = "images/persoDBaton4.png";
+
+			this.spritesPersoDBaton[5] = new Image();
+			this.spritesPersoDBaton[5].src = "images/persoDBaton5.png";
+
+			this.spritesPersoDBaton[6] = new Image();
+			this.spritesPersoDBaton[6].src = "images/persoDBaton6.png";
+
+			this.spritesPersoDBaton[7] = new Image();
+			this.spritesPersoDBaton[7].src = "images/persoDBaton7.png";
+
+			////////// PLANCHE
+
+			//gauche
+			this.spritesPersoGPlanche = new Array(8);
+			this.spritesPersoGPlanche[0] = new Image();
+			this.spritesPersoGPlanche[0].src = "images/persoGPlanche0.png";
+
+			this.spritesPersoGPlanche[1] = new Image();
+			this.spritesPersoGPlanche[1].src = "images/persoGPlanche1.png";
+
+			this.spritesPersoGPlanche[2] = new Image();
+			this.spritesPersoGPlanche[2].src = "images/persoGPlanche2.png";
+
+			this.spritesPersoGPlanche[3] = new Image();
+			this.spritesPersoGPlanche[3].src = "images/persoGPlanche3.png";
+
+			this.spritesPersoGPlanche[4] = new Image();
+			this.spritesPersoGPlanche[4].src = "images/persoGPlanche4.png";
+
+			this.spritesPersoGPlanche[5] = new Image();
+			this.spritesPersoGPlanche[5].src = "images/persoGPlanche5.png";
+
+			this.spritesPersoGPlanche[6] = new Image();
+			this.spritesPersoGPlanche[6].src = "images/persoGPlanche6.png";
+
+			this.spritesPersoGPlanche[7] = new Image();
+			this.spritesPersoGPlanche[7].src = "images/persoGPlanche7.png";
+
+			//droite
+			this.spritesPersoDPlanche = new Array(8);
+			this.spritesPersoDPlanche[0] = new Image();
+			this.spritesPersoDPlanche[0].src = "images/persoDPlanche0.png";
+
+			this.spritesPersoDPlanche[1] = new Image();
+			this.spritesPersoDPlanche[1].src = "images/persoDPlanche1.png";
+
+			this.spritesPersoDPlanche[2] = new Image();
+			this.spritesPersoDPlanche[2].src = "images/persoDPlanche2.png";
+
+			this.spritesPersoDPlanche[3] = new Image();
+			this.spritesPersoDPlanche[3].src = "images/persoDPlanche3.png";
+
+			this.spritesPersoDPlanche[4] = new Image();
+			this.spritesPersoDPlanche[4].src = "images/persoDPlanche4.png";
+
+			this.spritesPersoDPlanche[5] = new Image();
+			this.spritesPersoDPlanche[5].src = "images/persoDPlanche5.png";
+
+			this.spritesPersoDPlanche[6] = new Image();
+			this.spritesPersoDPlanche[6].src = "images/persoDPlanche6.png";
+
+			this.spritesPersoDPlanche[7] = new Image();
+			this.spritesPersoDPlanche[7].src = "images/persoDPlanche7.png";
+
+			////////// METAL
+
+			//gauche
+			this.spritesPersoGMetal = new Array(8);
+			this.spritesPersoGMetal[0] = new Image();
+			this.spritesPersoGMetal[0].src = "images/persoGMetal0.png";
+
+			this.spritesPersoGMetal[1] = new Image();
+			this.spritesPersoGMetal[1].src = "images/persoGMetal1.png";
+
+			this.spritesPersoGMetal[2] = new Image();
+			this.spritesPersoGMetal[2].src = "images/persoGMetal2.png";
+
+			this.spritesPersoGMetal[3] = new Image();
+			this.spritesPersoGMetal[3].src = "images/persoGMetal3.png";
+
+			this.spritesPersoGMetal[4] = new Image();
+			this.spritesPersoGMetal[4].src = "images/persoGMetal4.png";
+
+			this.spritesPersoGMetal[5] = new Image();
+			this.spritesPersoGMetal[5].src = "images/persoGMetal5.png";
+
+			this.spritesPersoGMetal[6] = new Image();
+			this.spritesPersoGMetal[6].src = "images/persoGMetal6.png";
+
+			this.spritesPersoGMetal[7] = new Image();
+			this.spritesPersoGMetal[7].src = "images/persoGMetal7.png";
+
+			//droite
+			this.spritesPersoDMetal = new Array(8);
+			this.spritesPersoDMetal[0] = new Image();
+			this.spritesPersoDMetal[0].src = "images/persoDMetal0.png";
+
+			this.spritesPersoDMetal[1] = new Image();
+			this.spritesPersoDMetal[1].src = "images/persoDMetal1.png";
+
+			this.spritesPersoDMetal[2] = new Image();
+			this.spritesPersoDMetal[2].src = "images/persoDMetal2.png";
+
+			this.spritesPersoDMetal[3] = new Image();
+			this.spritesPersoDMetal[3].src = "images/persoDMetal3.png";
+
+			this.spritesPersoDMetal[4] = new Image();
+			this.spritesPersoDMetal[4].src = "images/persoDMetal4.png";
+
+			this.spritesPersoDMetal[5] = new Image();
+			this.spritesPersoDMetal[5].src = "images/persoDMetal5.png";
+
+			this.spritesPersoDMetal[6] = new Image();
+			this.spritesPersoDMetal[6].src = "images/persoDMetal6.png";
+
+			this.spritesPersoDMetal[7] = new Image();
+			this.spritesPersoDMetal[7].src = "images/persoDMetal7.png";
+
+
+
+
+
 		}else{
 			//droite
         this.spritesPersoD = new Array(8);
@@ -195,6 +361,170 @@ class Perso {
 		this.spritesPersoB[7] = new Image();
 		this.spritesPersoB[7].src = "images/persoBB1.png";
 
+		//objet
+
+		////////// STICK
+
+			//gauche
+			this.spritesPersoGBaton = new Array(8);
+			this.spritesPersoGBaton[0] = new Image();
+			this.spritesPersoGBaton[0].src = "images/persoBGBaton0.png";
+
+			this.spritesPersoGBaton[1] = new Image();
+			this.spritesPersoGBaton[1].src = "images/persoBGBaton1.png";
+
+			this.spritesPersoGBaton[2] = new Image();
+			this.spritesPersoGBaton[2].src = "images/persoBGBaton2.png";
+
+			this.spritesPersoGBaton[3] = new Image();
+			this.spritesPersoGBaton[3].src = "images/persoBGBaton3.png";
+
+			this.spritesPersoGBaton[4] = new Image();
+			this.spritesPersoGBaton[4].src = "images/persoBGBaton4.png";
+
+			this.spritesPersoGBaton[5] = new Image();
+			this.spritesPersoGBaton[5].src = "images/persoBGBaton5.png";
+
+			this.spritesPersoGBaton[6] = new Image();
+			this.spritesPersoGBaton[6].src = "images/persoBGBaton6.png";
+
+			this.spritesPersoGBaton[7] = new Image();
+			this.spritesPersoGBaton[7].src = "images/persoBGBaton7.png";
+
+			//droite
+			this.spritesPersoDBaton = new Array(8);
+			this.spritesPersoDBaton[0] = new Image();
+			this.spritesPersoDBaton[0].src = "images/persoBDBaton0.png";
+
+			this.spritesPersoDBaton[1] = new Image();
+			this.spritesPersoDBaton[1].src = "images/persoBDBaton1.png";
+
+			this.spritesPersoDBaton[2] = new Image();
+			this.spritesPersoDBaton[2].src = "images/persoBDBaton2.png";
+
+			this.spritesPersoDBaton[3] = new Image();
+			this.spritesPersoDBaton[3].src = "images/persoBDBaton3.png";
+
+			this.spritesPersoDBaton[4] = new Image();
+			this.spritesPersoDBaton[4].src = "images/persoBDBaton4.png";
+
+			this.spritesPersoDBaton[5] = new Image();
+			this.spritesPersoDBaton[5].src = "images/persoBDBaton5.png";
+
+			this.spritesPersoDBaton[6] = new Image();
+			this.spritesPersoDBaton[6].src = "images/persoBDBaton6.png";
+
+			this.spritesPersoDBaton[7] = new Image();
+			this.spritesPersoDBaton[7].src = "images/persoBDBaton7.png";
+
+			////////// PLANCHE
+
+			//gauche
+			this.spritesPersoGPlanche = new Array(8);
+			this.spritesPersoGPlanche[0] = new Image();
+			this.spritesPersoGPlanche[0].src = "images/persoBGPlanche0.png";
+
+			this.spritesPersoGPlanche[1] = new Image();
+			this.spritesPersoGPlanche[1].src = "images/persoBGPlanche1.png";
+
+			this.spritesPersoGPlanche[2] = new Image();
+			this.spritesPersoGPlanche[2].src = "images/persoBGPlanche2.png";
+
+			this.spritesPersoGPlanche[3] = new Image();
+			this.spritesPersoGPlanche[3].src = "images/persoBGPlanche3.png";
+
+			this.spritesPersoGPlanche[4] = new Image();
+			this.spritesPersoGPlanche[4].src = "images/persoBGPlanche4.png";
+
+			this.spritesPersoGPlanche[5] = new Image();
+			this.spritesPersoGPlanche[5].src = "images/persoBGPlanche5.png";
+
+			this.spritesPersoGPlanche[6] = new Image();
+			this.spritesPersoGPlanche[6].src = "images/persoBGPlanche6.png";
+
+			this.spritesPersoGPlanche[7] = new Image();
+			this.spritesPersoGPlanche[7].src = "images/persoBGPlanche7.png";
+
+			//droite
+			this.spritesPersoDPlanche = new Array(8);
+			this.spritesPersoDPlanche[0] = new Image();
+			this.spritesPersoDPlanche[0].src = "images/persoBDPlanche0.png";
+
+			this.spritesPersoDPlanche[1] = new Image();
+			this.spritesPersoDPlanche[1].src = "images/persoBDPlanche1.png";
+
+			this.spritesPersoDPlanche[2] = new Image();
+			this.spritesPersoDPlanche[2].src = "images/persoBDPlanche2.png";
+
+			this.spritesPersoDPlanche[3] = new Image();
+			this.spritesPersoDPlanche[3].src = "images/persoBDPlanche3.png";
+
+			this.spritesPersoDPlanche[4] = new Image();
+			this.spritesPersoDPlanche[4].src = "images/persoBDPlanche4.png";
+
+			this.spritesPersoDPlanche[5] = new Image();
+			this.spritesPersoDPlanche[5].src = "images/persoBDPlanche5.png";
+
+			this.spritesPersoDPlanche[6] = new Image();
+			this.spritesPersoDPlanche[6].src = "images/persoBDPlanche6.png";
+
+			this.spritesPersoDPlanche[7] = new Image();
+			this.spritesPersoDPlanche[7].src = "images/persoBDPlanche7.png";
+
+			////////// METAL
+
+			//gauche
+			this.spritesPersoGMetal = new Array(8);
+			this.spritesPersoGMetal[0] = new Image();
+			this.spritesPersoGMetal[0].src = "images/persoBGMetal0.png";
+
+			this.spritesPersoGMetal[1] = new Image();
+			this.spritesPersoGMetal[1].src = "images/persoBGMetal1.png";
+
+			this.spritesPersoGMetal[2] = new Image();
+			this.spritesPersoGMetal[2].src = "images/persoBGMetal2.png";
+
+			this.spritesPersoGMetal[3] = new Image();
+			this.spritesPersoGMetal[3].src = "images/persoBGMetal3.png";
+
+			this.spritesPersoGMetal[4] = new Image();
+			this.spritesPersoGMetal[4].src = "images/persoBGMetal4.png";
+
+			this.spritesPersoGMetal[5] = new Image();
+			this.spritesPersoGMetal[5].src = "images/persoBGMetal5.png";
+
+			this.spritesPersoGMetal[6] = new Image();
+			this.spritesPersoGMetal[6].src = "images/persoBGMetal6.png";
+
+			this.spritesPersoGMetal[7] = new Image();
+			this.spritesPersoGMetal[7].src = "images/persoBGMetal7.png";
+
+			//droite
+			this.spritesPersoDMetal = new Array(8);
+			this.spritesPersoDMetal[0] = new Image();
+			this.spritesPersoDMetal[0].src = "images/persoBDMetal0.png";
+
+			this.spritesPersoDMetal[1] = new Image();
+			this.spritesPersoDMetal[1].src = "images/persoBDMetal1.png";
+
+			this.spritesPersoDMetal[2] = new Image();
+			this.spritesPersoDMetal[2].src = "images/persoBDMetal2.png";
+
+			this.spritesPersoDMetal[3] = new Image();
+			this.spritesPersoDMetal[3].src = "images/persoBDMetal3.png";
+
+			this.spritesPersoDMetal[4] = new Image();
+			this.spritesPersoDMetal[4].src = "images/persoBDMetal4.png";
+
+			this.spritesPersoDMetal[5] = new Image();
+			this.spritesPersoDMetal[5].src = "images/persoBDMetal5.png";
+
+			this.spritesPersoDMetal[6] = new Image();
+			this.spritesPersoDMetal[6].src = "images/persoBDMetal6.png";
+
+			this.spritesPersoDMetal[7] = new Image();
+			this.spritesPersoDMetal[7].src = "images/persoBDMetal7.png";
+
 		}
 
 
@@ -219,11 +549,37 @@ class Perso {
     			break;
     		case "left":
     			this.incrementTime(time, this.spritesPersoG.length);
-    			return this.spritesPersoG[this.indexFrame];
+    			switch(this.holdType){
+    				case 'stick':
+    					return this.spritesPersoGBaton[this.indexFrame];
+    				break;
+    				case 'wood':
+    					return this.spritesPersoGPlanche[this.indexFrame];
+    				break;
+    				case 'iron':
+    					return this.spritesPersoGMetal[this.indexFrame];
+    				break;
+    				default:
+    				return this.spritesPersoG[this.indexFrame];
+    			}		
+    			
     			break;
     		case "right":
     			this.incrementTime(time, this.spritesPersoD.length);
-    			return this.spritesPersoD[this.indexFrame];
+    			switch(this.holdType){
+    				case 'stick':
+    					return this.spritesPersoDBaton[this.indexFrame];
+    				break;
+    				case 'wood':
+    					return this.spritesPersoDPlanche[this.indexFrame];
+    				break;
+    				case 'iron':
+    					return this.spritesPersoDMetal[this.indexFrame];
+    				break;
+    				default:
+    				return this.spritesPersoD[this.indexFrame];
+    			}
+    			
     			break;
     		case "back":
     			this.incrementTime(time,this.spritesPersoB.length);
