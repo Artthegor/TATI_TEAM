@@ -1,9 +1,12 @@
 class Anomaly {
 
-    sprite= {
+    sprite = {
         broken: "",
         notBroken: ""
     };
+
+    soundBreak;
+    soundRepair;
 
     constructor(position, materialRepair, type) {
         this.position = position;
@@ -15,13 +18,50 @@ class Anomaly {
         this.sprite.broken = new Image();
         this.sprite.notBroken = new Image();
         this.initSprite();
+        this.initSound();
     }
 
-    get sprite(){
-        if(this.isBroken){
+    get sprite() {
+        if (this.isBroken) {
             return this.sprite.broken;
         }
         return this.sprite.notBroken;
+    }
+
+    initSound() {
+        switch (this.type) {
+            case type.ENGINE_FIRE:
+                this.soundBreak = new Sound("sound/fireship1.mp3");
+                this.soundRepair = new Sound("sound/Extincteur.mp3");
+                break;
+            case type.LEVER:
+                this.soundBreak = new Sound("sound/build2.mp3");
+                this.soundRepair = new Sound("sound/woodchop3.mp3");
+                break;
+            case type.BARREL_FIRE:
+                this.soundBreak = new Sound("sound/fireship1.mp3");
+                this.soundRepair = new Sound("sound/Extincteur.mp3");
+                break;
+            case type.PIPE:
+                this.soundBreak = new Sound("sound/XplosionPipe.mp3");
+                this.soundRepair = new Sound("sound/metallicStrike.mp3");
+                break;
+            case type.LEAK:
+                this.soundBreak = new Sound("sound/crackwood.mp3");
+                this.soundRepair = new Sound("sound/woodchop3.mp3");
+                break;
+            case type.HELM:
+                this.soundBreak = new Sound("sound/crackwood.mp3");
+                this.soundRepair = new Sound("sound/woodchop3.mp3");
+                break;
+            case type.HOVEN_FIRE:
+                this.soundBreak = new Sound("sound/fireship1.mp3");
+                this.soundRepair = new Sound("sound/Extincteur.mp3");
+                break;
+            default:
+                break;
+
+        }
     }
 
     initSprite() {
@@ -55,13 +95,14 @@ class Anomaly {
     }
 
     destroy() {
+        this.soundBreak.play();
         this.isBroken = true;
     }
 
     repaired() {
+        this.soundRepair.play();
         this.isBroken = false;
     }
-
 
 
 }
