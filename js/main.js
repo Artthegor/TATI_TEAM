@@ -267,10 +267,20 @@ document.addEventListener("DOMContentLoaded", function () {
         render();
         if (inGame) {
             update(Date.now());
+            render();
+        	requestAnimationFrame(gameLoop);
+        }else{
+        	gameover();
         }
-        render();
-        requestAnimationFrame(gameLoop);
+        
     };
+
+    gameover = function(){
+    	document.getElementById("menu").style.display = 'block';
+        document.getElementById("content").style.display = 'none';
+        document.getElementById("gameOver").style.display = 'block';
+
+    }
 
     increaseWaterLevel = function () {
         var nbAnomaly = 0;
