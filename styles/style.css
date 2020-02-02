@@ -33,6 +33,11 @@
 
 }
 
+
+.btnJouer:hover{
+    cursor:pointer;
+}
+
 #contentBtn {
     padding-top: 50px;
 }

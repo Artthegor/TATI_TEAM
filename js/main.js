@@ -111,10 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("keydown", captureAppuiToucheClavier);
         document.addEventListener("keyup", captureRelacheToucheClavier);
 
-        let anoDestroy = new Anomaly(new Position(300, 520), material.WOOD, type.LEAK);
-        anoDestroy.destroy();
-
-        repaireKits = [];
+        repaireKits = [new RepareKit(new Position(413,320),material.EXTINGUISHER)];
         shelveWood = new Shelve(new Position(750, 520), material.WOOD, 0);
         shelveMetal = new Shelve(new Position(870, 520), material.IRON, 0);
         shelveStick = new Shelve(new Position(1020, 520), material.STICK, 0);
@@ -538,9 +535,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 break;
             case material.EXTINGUISHER :
-                if (!checkHitBoxAnomaliePerso(perso))
-                    if (!checkHitBoxMaterialPerso(perso))
-                        putMaterialKitDown(perso);
+                if (!checkHitBoxAnomaliePerso(perso)) {
+                    if (!checkHitBoxShelvesPerso(perso)) {
+                        if (!checkHitBoxMaterialPerso(perso)) {
+                            putMaterialKitDown(perso);
+                        }
+                    }
+                }
                 break;
             case material.WOOD :
                 if (!checkHitBoxAnomaliePerso(perso)) {
@@ -650,8 +651,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 repaireKit.position.x + repaireKit.width < perso.pos.x) continue;
             if (perso.holdType === material.EMPTY) {
                 repaireKits.splice(repaireKits.indexOf(repaireKit), 1);
+                console.log(repaireKits);
+                console.log(perso);
+
                 perso.takeObject(repaireKit);
                 perso.holdType = repaireKit.material;
+                console.log(perso.holdType);
+                console.log(repaireKit.material);
                 return true;
             }
         }
