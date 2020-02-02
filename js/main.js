@@ -362,7 +362,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 (perso.pointRef.y == validYLines[1] && ((perso.pos.x) < 709 || perso.pos.x > 711))) ||
             ((perso.pointRef.y == validYLines[2] && perso.pos.x > 410) &&
                 (perso.pointRef.y == validYLines[2] && ((perso.pos.x) < 824 || perso.pos.x > 826))));
-    }
+    };
 
     testMurRight = function (perso) {
         return ((perso.pointRef.y == validYLines[0] && perso.pos.x + perso.largeur < 1115) ||
@@ -526,13 +526,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     drawAnomaly = function () {
         for (const anomaly of this.anomalys) {
-            var offset=-50
+            var offset=-50;
             var right = -30;
 
-                if(anomaly.type=== type.HELM ||anomaly.type=== type.LEVER) {
-                    offset = 16;
-                    right =0;
-                }
+            if(anomaly.type=== type.HELM ||anomaly.type=== type.LEVER) {
+                offset = 16;
+                right =0;
+            }
+            if(anomaly.type=== type.ENGINE_FIRE ||anomaly.type=== type.HOVEN_FIRE ||anomaly.type=== type.BARREL_FIRE ) {
+                offset = -100;
+            }
             if (anomaly.isBroken) {
                 ctx.drawImage(anomaly.sprite.broken, anomaly.position.x - anomaly.sprite.broken.width/2+right, anomaly.position.y - anomaly.sprite.broken.height + offset);
             } else {

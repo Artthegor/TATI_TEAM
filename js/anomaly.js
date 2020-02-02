@@ -81,7 +81,7 @@ class Anomaly {
             case 'fire':
                 this.sprite.broken.width = 10;
                 this.sprite.broken.height = 10;
-                this.sprite.broken.src = "images/flamme.png";
+                this.sprite.broken.src = "images/flamme2.png";
                 this.sprite.notBroken.src ="";
                 break;
             case 'blockenHelm':
@@ -91,6 +91,14 @@ class Anomaly {
             case 'lever':
                 this.sprite.broken.src = "images/levier_casse.png";
                 this.sprite.notBroken.src ="images/levier_ok.png";
+                break;
+            default:
+                this.sprite.broken.width = 10;
+                this.sprite.broken.height = 10;
+                this.sprite.broken.src = "images/flamme2.png";
+                this.sprite.notBroken.src ="";
+                break;
+
         }
     }
 
