@@ -1,0 +1,112 @@
+@font-face {
+    font-family: 'steamy';
+    src: url('steamy.otf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 100%;
+    background: linear-gradient(to right, rgba(113,206,239,1) 0%, rgba(113,206,239,1) 13%, rgba(33,180,226,1) 51%, rgba(183,222,237,1) 100%);
+}
+
+#title {
+    display: block;
+    margin: auto;
+}
+
+#titleimg {
+    width: 200px;
+}
+
+#gameOver {
+    display: none;
+    position: absolute;
+    top: 3%;
+    left: 30%;
+    margin: auto;
+    width: 1400px;
+    padding: 5%;
+}
+
+#gameOver img {
+    width: 500px !important;
+}
+
+#menu {
+    position: relative;
+    width: 1400px;
+    height: 700px;
+    margin: 10px auto;
+    background-image: url("../images/menu.png");
+}
+
+#logo{
+    width: 250px !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 30px 0 !important;
+}
+
+.btnJouer {
+    background-color: #ba874f;
+    width: 250px;
+    position: relative;
+    display: block;
+    margin: 40px auto;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 10px 11px 20px 1px rgba(0,0,0,1);
+
+}
+
+
+.btnJouer:hover{
+    cursor:pointer;
+}
+
+#contentBtn {
+    padding-top: 10px;
+}
+
+#menu img {
+    position: relative;
+    display: block;
+    margin: auto;
+    width: 180px;
+}
+
+
+#content {
+    position: relative;
+    display: none;
+    width: 1400px;
+    height: 700px;
+    margin: 10px auto;
+}
+    
+#content #zoneJeu {
+    border: solid 1px #000;
+    width: 1400px;
+    height: 700px;
+    position: absolute;
+    top: 0; 
+    left: 0;
+    background-image: url("../images/bateau.png");
+}
+
+#content #score {
+    border: solid 1px #000;
+    width: 200px;
+    height: 55px;
+    position: absolute;
+    top: -50px;
+    left: 1200px;
+    text-align: right;
+    font-family:steamy, sans-serif;
+    font-size:50px;
+}
