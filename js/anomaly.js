@@ -2,8 +2,7 @@ class Anomaly {
 
     sprite= {
         broken: "",
-        notBroken: "",
-        defaul: ""
+        notBroken: ""
     };
 
     constructor(position, materialRepair, type) {
@@ -28,31 +27,30 @@ class Anomaly {
     initSprite() {
         switch (this.type) {
             case 'brockenPipe':
-                this.sprite.defaul = "#a59ea4";
-                this.sprite.broken = "";
-                this.sprite.notBroken ="";
+                this.sprite.broken.src = "images/fuite.png";
+                this.sprite.broken.width = 10;
+                this.sprite.broken.height = 10;
+                this.sprite.notBroken.src ="";
                 break;
             case 'leak':
-                this.sprite.defaul = "#73a2c5";
-                this.sprite.broken = "";
-                this.sprite.notBroken ="";
+                this.sprite.broken.src = "images/fuite.png";
+                this.sprite.broken.width = 10;
+                this.sprite.broken.height = 10;
+                this.sprite.notBroken.src ="";
                 break;
             case 'fire':
-                this.sprite.defaul = "#ea4b32";
-                this.sprite.broken = "";
-                this.sprite.notBroken ="";
-                break;
-            case 'smokingMachine':
-                this.sprite.defaul = "#0b0403";
-                this.sprite.broken = "";
-                this.sprite.notBroken ="";
+                this.sprite.broken.width = 10;
+                this.sprite.broken.height = 10;
+                this.sprite.broken.src = "images/flamme.png";
+                this.sprite.notBroken.src ="";
                 break;
             case 'blockenHelm':
-                this.sprite.defaul = "#ae5721";
-                this.sprite.broken = "";
-                this.sprite.notBroken ="";
+                this.sprite.broken.src = "images/gouv_casse.png";
+                this.sprite.notBroken.src ="images/gouv_ok.png";
                 break;
-            default:
+            case 'lever':
+                this.sprite.broken.src = "images/levier_casse.png";
+                this.sprite.notBroken.src ="images/levier_ok.png";
         }
     }
 

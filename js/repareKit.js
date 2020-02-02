@@ -54,7 +54,7 @@ class RepareKit {
                 this.sprite.src = "images/planche.png";
                 break;
             case material.EXTINGUISHER:
-                this.sprite.src = "images/bateau.png";
+                this.sprite.src = "images/extin.png";
                 break;
             default:
         }
