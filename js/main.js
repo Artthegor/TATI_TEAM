@@ -396,7 +396,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ctx.clearRect(0, 0, ctx.width, ctx.height);
         drawEchelle();
         drawAnomaly();
-        drawRepareKit();
+        drawRepareKit(dt);
         drawShelve();
         drawScore();
         drawPersonage(perso1);
@@ -457,14 +457,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 
-    drawRepareKit = function () {
+    drawRepareKit = function (time) {
         for (const repaireKit of repaireKits) {
-            ctx.drawImage(repaireKit.sprite, repaireKit.position.x - repaireKit.width/2, repaireKit.position.y - repaireKit.height, repaireKit.width, repaireKit.height);
-            // ctx.beginPath();
-            // ctx.lineWidth = "2";
-            // ctx.arc(repaireKit.position.x, repaireKit.position.y, repaireKit.width, 0, 2 * Math.PI);
-            // ctx.fillStyle = "#2fff2b";
-            // ctx.fill();
+            ctx.drawImage(repaireKit.sprite, repaireKit.position.x - repaireKit.width / 2, repaireKit.position.y - repaireKit.height + repaireKit.getAnimations(time), repaireKit.width, repaireKit.height);
         }
     };
 
