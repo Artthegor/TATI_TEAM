@@ -144,9 +144,9 @@ document.addEventListener("DOMContentLoaded", function () {
             new Anomaly(new Position(610, 685), material.WOOD, type.LEAK),
             new Anomaly(new Position(845, 685), material.WOOD, type.LEAK),
             new Anomaly(new Position(845, 685), material.WOOD, type.LEAK),
-            new Anomaly(new Position(370, 320), material.IRON, type.PIPE),
-            new Anomaly(new Position(680, 320), material.IRON, type.PIPE),
-            new Anomaly(new Position(1070, 320), material.STICK, type.HELM),
+            new Anomaly(new Position(370, 330), material.IRON, type.PIPE),
+            new Anomaly(new Position(680, 330), material.IRON, type.PIPE),
+            new Anomaly(new Position(1070, 330), material.STICK, type.HELM),
         ];
         navigator.geolocation.getCurrentPosition(success, error, options);
 
