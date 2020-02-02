@@ -10,8 +10,40 @@
     width: 1400px;
     height: 700px;
     margin: 10px auto;
-    background-color: grey;
+    background-image: url("../images/menu.png");
 }
+
+#logo{
+    width: 250px !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 30px 0 !important;
+}
+
+.btnJouer {
+    background-color: #ba874f;
+    width: 250px;
+    position: relative;
+    display: block;
+    margin: 40px auto;
+    padding: 5px;
+    border-radius: 10px;
+    box-shadow: 10px 11px 20px 1px rgba(0,0,0,1);
+
+}
+
+#contentBtn {
+    padding-top: 50px;
+}
+
+#menu img {
+    position: relative;
+    display: block;
+    margin: auto;
+    width: 180px;
+}
+
 
 #content {
     position: relative;
