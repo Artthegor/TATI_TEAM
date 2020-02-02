@@ -275,7 +275,59 @@ class Perso {
 			this.spritesPersoDMetal[7].src = "images/persoDMetal7.png";
 
 
+			////////// EXTINCTEUR
 
+			//gauche
+			this.spritesPersoGExtinct = new Array(8);
+			this.spritesPersoGExtinct[0] = new Image();
+			this.spritesPersoGExtinct[0].src = "images/persoGExtincteur0.png";
+
+			this.spritesPersoGExtinct[1] = new Image();
+			this.spritesPersoGExtinct[1].src = "images/persoGExtincteur1.png";
+
+			this.spritesPersoGExtinct[2] = new Image();
+			this.spritesPersoGExtinct[2].src = "images/persoGExtincteur2.png";
+
+			this.spritesPersoGExtinct[3] = new Image();
+			this.spritesPersoGExtinct[3].src = "images/persoGExtincteur3.png";
+
+			this.spritesPersoGExtinct[4] = new Image();
+			this.spritesPersoGExtinct[4].src = "images/persoGExtincteur4.png";
+
+			this.spritesPersoGExtinct[5] = new Image();
+			this.spritesPersoGExtinct[5].src = "images/persoGExtincteur5.png";
+
+			this.spritesPersoGExtinct[6] = new Image();
+			this.spritesPersoGExtinct[6].src = "images/persoGExtincteur6.png";
+
+			this.spritesPersoGExtinct[7] = new Image();
+			this.spritesPersoGExtinct[7].src = "images/persoGExtincteur7.png";
+
+			//droite
+			this.spritesPersoDExtinct = new Array(8);
+			this.spritesPersoDExtinct[0] = new Image();
+			this.spritesPersoDExtinct[0].src = "images/persoDExtincteur0.png";
+
+			this.spritesPersoDExtinct[1] = new Image();
+			this.spritesPersoDExtinct[1].src = "images/persoDExtincteur1.png";
+
+			this.spritesPersoDExtinct[2] = new Image();
+			this.spritesPersoDExtinct[2].src = "images/persoDExtincteur2.png";
+
+			this.spritesPersoDExtinct[3] = new Image();
+			this.spritesPersoDExtinct[3].src = "images/persoDExtincteur3.png";
+
+			this.spritesPersoDExtinct[4] = new Image();
+			this.spritesPersoDExtinct[4].src = "images/persoDExtincteur4.png";
+
+			this.spritesPersoDExtinct[5] = new Image();
+			this.spritesPersoDExtinct[5].src = "images/persoDExtincteur5.png";
+
+			this.spritesPersoDExtinct[6] = new Image();
+			this.spritesPersoDExtinct[6].src = "images/persoDExtincteur6.png";
+
+			this.spritesPersoDExtinct[7] = new Image();
+			this.spritesPersoDExtinct[7].src = "images/persoDExtincteur7.png";
 
 
 		}else{
@@ -525,6 +577,60 @@ class Perso {
 			this.spritesPersoDMetal[7] = new Image();
 			this.spritesPersoDMetal[7].src = "images/persoBDMetal7.png";
 
+			////////// EXTINCTEUR
+
+			//gauche
+			this.spritesPersoGExtinct = new Array(8);
+			this.spritesPersoGExtinct[0] = new Image();
+			this.spritesPersoGExtinct[0].src = "images/persoBGExtincteur0.png";
+
+			this.spritesPersoGExtinct[1] = new Image();
+			this.spritesPersoGExtinct[1].src = "images/persoBGExtincteur1.png";
+
+			this.spritesPersoGExtinct[2] = new Image();
+			this.spritesPersoGExtinct[2].src = "images/persoBGExtincteur2.png";
+
+			this.spritesPersoGExtinct[3] = new Image();
+			this.spritesPersoGExtinct[3].src = "images/persoBGExtincteur3.png";
+
+			this.spritesPersoGExtinct[4] = new Image();
+			this.spritesPersoGExtinct[4].src = "images/persoBGExtincteur4.png";
+
+			this.spritesPersoGExtinct[5] = new Image();
+			this.spritesPersoGExtinct[5].src = "images/persoBGExtincteur5.png";
+
+			this.spritesPersoGExtinct[6] = new Image();
+			this.spritesPersoGExtinct[6].src = "images/persoBGExtincteur6.png";
+
+			this.spritesPersoGExtinct[7] = new Image();
+			this.spritesPersoGExtinct[7].src = "images/persoBGExtincteur7.png";
+
+			//droite
+			this.spritesPersoDExtinct = new Array(8);
+			this.spritesPersoDExtinct[0] = new Image();
+			this.spritesPersoDExtinct[0].src = "images/persoBDExtincteur0.png";
+
+			this.spritesPersoDExtinct[1] = new Image();
+			this.spritesPersoDExtinct[1].src = "images/persoBDExtincteur1.png";
+
+			this.spritesPersoDExtinct[2] = new Image();
+			this.spritesPersoDExtinct[2].src = "images/persoBDExtincteur2.png";
+
+			this.spritesPersoDExtinct[3] = new Image();
+			this.spritesPersoDExtinct[3].src = "images/persoBDExtincteur3.png";
+
+			this.spritesPersoDExtinct[4] = new Image();
+			this.spritesPersoDExtinct[4].src = "images/persoBDExtincteur4.png";
+
+			this.spritesPersoDExtinct[5] = new Image();
+			this.spritesPersoDExtinct[5].src = "images/persoBDExtincteur5.png";
+
+			this.spritesPersoDExtinct[6] = new Image();
+			this.spritesPersoDExtinct[6].src = "images/persoBDExtincteur6.png";
+
+			this.spritesPersoDExtinct[7] = new Image();
+			this.spritesPersoDExtinct[7].src = "images/persoBDExtincteur7.png";
+
 		}
 
 
@@ -559,6 +665,9 @@ class Perso {
     				case 'iron':
     					return this.spritesPersoGMetal[this.indexFrame];
     				break;
+    				case 'extinguisher':
+    					return this.spritesPersoGExtinct[this.indexFrame];
+    				break;
     				default:
     				return this.spritesPersoG[this.indexFrame];
     			}		
@@ -575,6 +684,9 @@ class Perso {
     				break;
     				case 'iron':
     					return this.spritesPersoDMetal[this.indexFrame];
+    				break;
+    				case 'extinguisher':
+    					return this.spritesPersoDExtinct[this.indexFrame];
     				break;
     				default:
     				return this.spritesPersoD[this.indexFrame];
