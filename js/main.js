@@ -31,7 +31,7 @@ var dt = 0;
 var incrementTimeSupplies = 0;
 var eventSuppliesApparitionTrigger = 3000;
 var probaSuppliesApparition = 0.8;
-
+var skyWeather=1;
 var lastTime = 0;
 var thisTime = 0;
 var spritePerso = new Image();
@@ -75,17 +75,21 @@ function getWeather(latitude, longitude) {
             eventApparitionTrigger = 8000;
             probaAparitionEvent = 0.4;
             probaSuppliesApparition = 0.8;
+            skyWeather=1;
+
         } else {
             if (currentPressure > 1013) {
                 //UN PEU DE SOLEIL MAIS AUSSI DES NUAGES MA GUEULE
                 eventApparitionTrigger = 5000;
                 probaAparitionEvent = 0.3;
                 probaSuppliesApparition = 0.85;
+                skyWeather=2;
             } else {
                 // C EST LA TEMPETE DE OUF MON BRO
                 eventApparitionTrigger = 3000;
                 probaAparitionEvent = 0.2;
                 probaSuppliesApparition = 0.9;
+                skyWeather=3;
             }
         }
     };
@@ -481,6 +485,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     render = function () {
         ctx.clearRect(0, 0, ctx.width, ctx.height);
+        var background=new Image();
+        switch(skyWeather){
+            case 1:
+                background.src="images/sk1.png";
+                break;
+            case 2:
+                background.src="images/sky2.png";
+                break;
+            case 3:
+                background.src="images/sky3.png";
+                break;
+            default:
+                break;
+        }
+        ctx.drawImage(background,0,0);
+        var bateau = new Image();
+        bateau.src = "images/bateau.png";
+        ctx.drawImage(bateau,0,0);
         drawAnomaly();
         drawRepareKit(dt);
         drawShelve();
