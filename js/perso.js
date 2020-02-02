@@ -659,6 +659,7 @@ class Perso {
                 break;
             case "extinguisher" :
                 //change sprite to extinguisher holder
+				this.holdType=material.EXTINGUISHER;
                 break;
             case "stick" :
                 //change sprite to stick holder
@@ -673,6 +674,7 @@ class Perso {
         if (this.holdType === anoma.idMaterialRepair) {
             console.log("repare");
 			anoma.repaired();
+			if (!this.holdType=== material.EXTINGUISHER)
 			this.holdType = material.EMPTY;
         }
     }
