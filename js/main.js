@@ -117,9 +117,9 @@ document.addEventListener("DOMContentLoaded", function () {
         shelveStick = new Shelve(new Position(1020, 520), material.STICK, 0);
         shelves = [shelveWood, shelveStick, shelveMetal];
 
-        perso1 = new Perso(350, 520 - 115);
+        perso1 = new Perso(350, 520 - 120, 1);
         if (nbJoueur == 2) {
-            perso2 = new Perso(350, 330 - 115);
+            perso2 = new Perso(350, 330 - 120, 2);
         }
 
 
@@ -391,7 +391,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     render = function () {
         ctx.clearRect(0, 0, ctx.width, ctx.height);
-        drawEchelle();
         drawAnomaly();
         drawRepareKit(dt);
         drawShelve();
@@ -408,20 +407,11 @@ document.addEventListener("DOMContentLoaded", function () {
     function drawPersonage(perso) {
 
         ctx.drawImage(perso.getSprite(dt), perso.pos.x, perso.pos.y, perso.largeur, perso.hauteur);
-        ctx.strokeRect(perso.pos.x, perso.pos.y, perso.largeur, perso.hauteur);
 
 
     }
 
-    drawEchelle = function () {
-        ctx.strokeStyle = '#888888';
-
-
-        for (const echelle of listEchelle) {
-            ctx.strokeRect(echelle.x, echelle.y, largeurEchelle, hauteurEchelle);
-        }
-    };
-
+   
     drawAnomaly = function () {
         for (const anomaly of this.anomalys) {
             if (anomaly.isBroken) {
