@@ -25,14 +25,15 @@ body {
 #gameOver {
     display: none;
     position: absolute;
-    top: 60%;
-    left: 70%;
+    top: 3%;
+    left: 30%;
     margin: auto;
-    width: 300px;
+    width: 1400px;
+    padding: 5%;
 }
 
 #gameOver img {
-    width: 200px !important;
+    width: 500px !important;
 }
 
 #menu {

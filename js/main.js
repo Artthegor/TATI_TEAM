@@ -108,8 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //init du jeu
     function init(n) {
         nbJoueur = n;
-        document.getElementById("menu").style.display = 'none';
-        document.getElementById("content").style.display = 'block';
+        
 
         ctx = document.getElementById("zoneJeu").getContext("2d");
         ctx.width = document.getElementById("zoneJeu").width;
@@ -276,8 +275,6 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     gameover = function(){
-    	document.getElementById("menu").style.display = 'block';
-        document.getElementById("content").style.display = 'none';
         document.getElementById("gameOver").style.display = 'block';
 
     }
@@ -775,10 +772,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById('btn1j').onclick = function () {
         soundMenu.stop();
+        document.getElementById("menu").style.display = 'none';
+        document.getElementById("content").style.display = 'block';
         init(1);
     };
     document.getElementById('btn2j').onclick = function () {
         soundMenu.stop();
+        document.getElementById("menu").style.display = 'none';
+        document.getElementById("content").style.display = 'block';
         init(2);
     }
 
