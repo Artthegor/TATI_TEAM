@@ -1,10 +1,15 @@
 class Shelve {
+
+    nbMaterialKit;
+    materialType;
+
     constructor(position, materialType, nbMaterialKit) {
         this.position = position;
         this.materialType = materialType;
         this.nbMaterialKit = nbMaterialKit;
-        this.width = 20;
-        this.height = 70;
+        this.width = 65;
+        this.height = 160;
+
     }
 
     takeItem(personage) {
@@ -18,11 +23,20 @@ class Shelve {
     }
 
     addItem() {
+        console.log(this.nbMaterialKit);
         if (this.nbMaterialKit < 6) {
             this.nbMaterialKit++;
             return true;
         }
         return false;
+    }
+
+    get nbMaterialKit(){
+        return this.nbMaterialKit;
+    }
+
+    get materialType(){
+        return this.materialType;
     }
 
 }

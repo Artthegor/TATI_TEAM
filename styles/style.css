@@ -5,6 +5,23 @@
     font-style: normal;
 }
 
+body {
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 100%;
+    background: linear-gradient(to right, rgba(113,206,239,1) 0%, rgba(113,206,239,1) 13%, rgba(33,180,226,1) 51%, rgba(183,222,237,1) 100%);
+}
+
+#title {
+    display: block;
+    margin: auto;
+}
+
+#titleimg {
+    width: 300px;
+}
+
 #menu {
     position: relative;
     width: 1400px;

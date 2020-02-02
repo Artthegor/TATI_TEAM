@@ -51,6 +51,10 @@ var snd1;
 var soundTakeItem;
 var soundMusic;
 
+var shelvesStick;
+var shelvesWood;
+var shelvesIron;
+
 function success(pos) {
     getWeather(pos.coords.latitude, pos.coords.longitude);
 }
@@ -116,9 +120,9 @@ document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("keyup", captureRelacheToucheClavier);
 
         repaireKits = [new RepareKit(new Position(413,330),material.EXTINGUISHER)];
-        shelveWood = new Shelve(new Position(750, 520), material.WOOD, 0);
-        shelveMetal = new Shelve(new Position(870, 520), material.IRON, 0);
-        shelveStick = new Shelve(new Position(1020, 520), material.STICK, 0);
+        shelveWood = new Shelve(new Position(737, 515), material.WOOD, 0);
+        shelveMetal = new Shelve(new Position(857, 515), material.IRON, 0);
+        shelveStick = new Shelve(new Position(1005, 515), material.STICK, 0);
         shelves = [shelveWood, shelveStick, shelveMetal];
 
         perso1 = new Perso(350, 520 - 120, 1);
@@ -142,6 +146,76 @@ document.addEventListener("DOMContentLoaded", function () {
             new Anomaly(new Position(1100, 320), material.STICK, type.HELM),
         ];
         navigator.geolocation.getCurrentPosition(success, error, options);
+
+        //sprite jauge STICK
+        spriteShelveStick = new Array(7);
+		spriteShelveStick[0] = new Image();
+		spriteShelveStick[0].src = "images/jauge_baton_0.png";
+
+		spriteShelveStick[1] = new Image();
+		spriteShelveStick[1].src = "images/jauge_baton_1.png";
+
+		spriteShelveStick[2] = new Image();
+		spriteShelveStick[2].src = "images/jauge_baton_2.png";
+
+		spriteShelveStick[3] = new Image();
+		spriteShelveStick[3].src = "images/jauge_baton_3.png";
+
+		spriteShelveStick[4] = new Image();
+		spriteShelveStick[4].src = "images/jauge_baton_4.png";
+
+		spriteShelveStick[5] = new Image();
+		spriteShelveStick[5].src = "images/jauge_baton_5.png";
+
+		spriteShelveStick[6] = new Image();
+		spriteShelveStick[6].src = "images/jauge_baton_6.png";
+
+		//sprite jauge WOOD
+        spriteShelveWood = new Array(7);
+		spriteShelveWood[0] = new Image();
+		spriteShelveWood[0].src = "images/jauge_planche_0.png";
+
+		spriteShelveWood[1] = new Image();
+		spriteShelveWood[1].src = "images/jauge_planche_1.png";
+
+		spriteShelveWood[2] = new Image();
+		spriteShelveWood[2].src = "images/jauge_planche_2.png";
+
+		spriteShelveWood[3] = new Image();
+		spriteShelveWood[3].src = "images/jauge_planche_3.png";
+
+		spriteShelveWood[4] = new Image();
+		spriteShelveWood[4].src = "images/jauge_planche_4.png";
+
+		spriteShelveWood[5] = new Image();
+		spriteShelveWood[5].src = "images/jauge_planche_5.png";
+
+		spriteShelveWood[6] = new Image();
+		spriteShelveWood[6].src = "images/jauge_planche_6.png";
+
+
+		//sprite jauge METAL
+        spriteShelveIron = new Array(7);
+		spriteShelveIron[0] = new Image();
+		spriteShelveIron[0].src = "images/jauge_metal_0.png";
+
+		spriteShelveIron[1] = new Image();
+		spriteShelveIron[1].src = "images/jauge_metal_1.png";
+
+		spriteShelveIron[2] = new Image();
+		spriteShelveIron[2].src = "images/jauge_metal_2.png";
+
+		spriteShelveIron[3] = new Image();
+		spriteShelveIron[3].src = "images/jauge_metal_3.png";
+
+		spriteShelveIron[4] = new Image();
+		spriteShelveIron[4].src = "images/jauge_metal_4.png";
+
+		spriteShelveIron[5] = new Image();
+		spriteShelveIron[5].src = "images/jauge_metal_5.png";
+
+		spriteShelveIron[6] = new Image();
+		spriteShelveIron[6].src = "images/jauge_metal_6.png";
 
         snd1 = new Audio();
         soundTakeItem = new Sound("sound/arrow4.mp3");
@@ -446,11 +520,23 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     drawShelve = function () {
-        ctx.strokeStyle = '#3f36e5';
-        ctx.fillStyle = '#3f36e5';
+        
         for (const shelve of shelves) {
-            ctx.fillRect(shelve.position.x, shelve.position.y - shelve.height, shelve.width, shelve.height);
+        	var nb = shelve.nbMaterialKit;
+        	switch(shelve.materialType){
+        		case material.WOOD :
+        			ctx.drawImage(spriteShelveWood[nb], shelve.position.x, shelve.position.y - shelve.height, shelve.width, shelve.height)
+        		break;
+        		case material.IRON :
+        			ctx.drawImage(spriteShelveIron[nb], shelve.position.x, shelve.position.y - shelve.height , shelve.width, shelve.height)
+        		break;
+        		case material.STICK :
+        			ctx.drawImage(spriteShelveStick[nb], shelve.position.x, shelve.position.y - shelve.height, shelve.width, shelve.height)
+        		break;
+        	}
+ 
         }
+
     };
 
     drawRepareKit = function (time) {
