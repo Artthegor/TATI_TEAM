@@ -18,8 +18,11 @@ class Shelve {
     }
 
     addItem() {
-        if (this.nbMaterialKit < 6)
+        if (this.nbMaterialKit < 6) {
             this.nbMaterialKit++;
+            return true;
+        }
+        return false;
     }
 
 }

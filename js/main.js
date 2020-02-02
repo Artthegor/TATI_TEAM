@@ -26,8 +26,6 @@ var incrementTime = 0;
 var score = 0;
 var probaAparitionEvent = 0.3;
 var eventApparitionTrigger = 10000;
-var lastTime = 0;
-var thisTime = 0;
 var nbFrame = 0;
 var dt = 0;
 var incrementTimeSupplies = 0;
@@ -110,9 +108,9 @@ document.addEventListener("DOMContentLoaded", function () {
         anoDestroy.destroy();
 
         repaireKits = [];
-        shelveWood = new Shelve(new Position(500, 520), material.WOOD, 0);
-        shelveMetal = new Shelve(new Position(600, 520), material.IRON, 0);
-        shelveStick = new Shelve(new Position(700, 520), material.STICK, 0);
+        shelveWood = new Shelve(new Position(750, 520), material.WOOD, 0);
+        shelveMetal = new Shelve(new Position(870, 520), material.IRON, 0);
+        shelveStick = new Shelve(new Position(1020, 520), material.STICK, 0);
         shelves = [shelveWood, shelveStick, shelveMetal];
 
         perso1 = new Perso(350, 520 - 115);
@@ -120,11 +118,20 @@ document.addEventListener("DOMContentLoaded", function () {
         perso2 = new Perso(350, 330 - 115);
         console.log(perso2);
 
-        anomalys = [new Anomaly(new Position(511, 685), material.EXTINGUISHER, type.BARREL_FIRE),
-            new Anomaly(new Position(764, 685), material.EXTINGUISHER, type.BARREL_FIRE),
-            new Anomaly(new Position(320, 520), material.EXTINGUISHER, type.BARREL_FIRE),
-            new Anomaly(new Position(500, 330), material.IRON, type.PIPE),
-            new Anomaly(new Position(750, 520), material.WOOD, type.LEAK)];
+        anomalys = [new Anomaly(new Position(245, 520), material.EXTINGUISHER, type.BARREL_FIRE),
+            new Anomaly(new Position(70, 685), material.EXTINGUISHER, type.BARREL_FIRE),
+            new Anomaly(new Position(440, 685), material.EXTINGUISHER, type.BARREL_FIRE),
+            new Anomaly(new Position(445, 520), material.EXTINGUISHER, type.ENGINE_FIRE),
+            new Anomaly(new Position(370, 520), material.IRON, type.PIPE),
+            new Anomaly(new Position(670, 520), material.EXTINGUISHER, type.ENGINE_FIRE),
+            new Anomaly(new Position(970, 685), material.EMPTY, type.LEVER),
+            new Anomaly(new Position(610, 685), material.WOOD, type.LEAK),
+            new Anomaly(new Position(845, 685), material.WOOD, type.LEAK),
+            new Anomaly(new Position(845, 685), material.WOOD, type.LEAK),
+            new Anomaly(new Position(370, 320), material.IRON, type.PIPE),
+            new Anomaly(new Position(680, 320), material.IRON, type.PIPE),
+            new Anomaly(new Position(1100, 320), material.STICK, type.HELM),
+        ];
         navigator.geolocation.getCurrentPosition(success, error, options);
 
         gameLoop();
@@ -207,14 +214,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (kit.position.x === 1150) {
                     switch (kit.material) {
                         case material.STICK :
-                            shelveStick.nbMaterialKit++;
+                            shelveStick.addItem();
 
                             break;
                         case material.IRON :
-                            shelveMetal.nbMaterialKit++;
+                            shelveMetal.addItem();
                             break;
                         case material.WOOD :
-                            shelveWood.nbMaterialKit++;
+                            shelveWood.addItem();
                             break;
                         default:
                     }
@@ -251,20 +258,20 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     testMurLeft = function (perso) {
-        return ((perso.pointRef.y == validYLines[0] && perso.pos.x > 295) ||
-            ((perso.pointRef.y == validYLines[1] && perso.pos.x > 250) &&
+        return ((perso.pointRef.y == validYLines[0] && perso.pos.x > 271) ||
+            ((perso.pointRef.y == validYLines[1] && perso.pos.x > 210) &&
                 (perso.pointRef.y == validYLines[1] && ((perso.pos.x) < 709 || perso.pos.x > 711))) ||
-            ((perso.pointRef.y == validYLines[2] && perso.pos.x > 400) &&
+            ((perso.pointRef.y == validYLines[2] && perso.pos.x > 410) &&
                 (perso.pointRef.y == validYLines[2] && ((perso.pos.x) < 824 || perso.pos.x > 826))));
     }
 
     testMurRight = function (perso) {
-        return ((perso.pointRef.y == validYLines[0] && perso.pos.x + perso.largeur < 1100) ||
+        return ((perso.pointRef.y == validYLines[0] && perso.pos.x + perso.largeur < 1115) ||
             ((perso.pointRef.y == validYLines[1] && perso.pos.x + perso.largeur < 1100) &&
                 (perso.pointRef.y == validYLines[1] && ((perso.pos.x + perso.largeur) < 709 || perso.pos.x + perso.largeur > 711))) ||
-            ((perso.pointRef.y == validYLines[2] && perso.pos.x + perso.largeur < 1000) &&
+            ((perso.pointRef.y == validYLines[2] && perso.pos.x + perso.largeur < 995) &&
                 (perso.pointRef.y == validYLines[2] && ((perso.pos.x + perso.largeur - 5) < 824 || perso.pos.x + perso.largeur - 5 > 826))));
-    }
+    };
 
     update = function (d) {
 
@@ -505,10 +512,9 @@ document.addEventListener("DOMContentLoaded", function () {
             case material.EMPTY:
                 if (!checkHitBoxShelvesPerso(perso)) {
                     if (!checkHitBoxMaterialPerso(perso)) {
+                        checkHitBoxAnomaliePerso(perso)
                     }
                 }
-                //checkLeverBrocken
-                //else checkMaterial
                 break;
             case material.EXTINGUISHER :
                 if (!checkHitBoxAnomaliePerso(perso))
@@ -605,7 +611,14 @@ document.addEventListener("DOMContentLoaded", function () {
         for (const shelve of shelves) {
             if (perso.pointRef.y !== 520 ||
                 shelve.position.x > perso.pos.x + perso.largeur || shelve.position.x + shelve.width < perso.pos.x) continue;
-            return shelve.takeItem(perso);
+            if (perso.holdType === shelve.materialType) {
+                if(shelve.addItem()) {
+                    perso.holdType = material.EMPTY;
+                }
+                return true;
+            }
+            else if (perso.holdType === material.EMPTY){return shelve.takeItem(perso);}
+            return false;
         }
     };
 
