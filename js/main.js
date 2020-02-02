@@ -499,11 +499,7 @@ document.addEventListener("DOMContentLoaded", function () {
         for (const anomaly of this.anomalys) {
             var offset=-50
             var right = -30;
-                ctx.beginPath();
-                ctx.lineWidth = "2";
-                ctx.arc(anomaly.position.x, anomaly.position.y, 10, 0, 2 * Math.PI);
-                ctx.fillStyle = "#FF4422";
-                ctx.fill();
+            
                 if(anomaly.type=== type.HELM ||anomaly.type=== type.LEVER) {
                     offset = 16;
                     right =0;
