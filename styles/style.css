@@ -5,8 +5,17 @@
     font-style: normal;
 }
 
+#menu {
+    position: relative;
+    width: 1400px;
+    height: 700px;
+    margin: 10px auto;
+    background-color: grey;
+}
+
 #content {
     position: relative;
+    display: none;
     width: 1400px;
     height: 700px;
     margin: 10px auto;

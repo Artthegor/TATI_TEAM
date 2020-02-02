@@ -45,6 +45,8 @@ var options = {
     maximumAge: 0
 };
 
+var nbJoueur = 1;
+
 function success(pos) {
     getWeather(pos.coords.latitude, pos.coords.longitude);
 }
@@ -96,10 +98,17 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     //init du jeu
-    function init() {
+    function init(n) {
+    	nbJoueur = n;
+    	document.getElementById("menu").style.display = 'none';
+    	document.getElementById("content").style.display = 'block';
+
         ctx = document.getElementById("zoneJeu").getContext("2d");
         ctx.width = document.getElementById("zoneJeu").width;
         ctx.height = document.getElementById("zoneJeu").height;
+
+        
+
 
         document.addEventListener("keydown", captureAppuiToucheClavier);
         document.addEventListener("keyup", captureRelacheToucheClavier);
@@ -114,9 +123,10 @@ document.addEventListener("DOMContentLoaded", function () {
         shelves = [shelveWood, shelveStick, shelveMetal];
 
         perso1 = new Perso(350, 520 - 115);
-        console.log(perso1);
-        perso2 = new Perso(350, 330 - 115);
-        console.log(perso2);
+        if(nbJoueur == 2){
+        	perso2 = new Perso(350, 330 - 115);
+        }
+        
 
         anomalys = [new Anomaly(new Position(245, 520), material.EXTINGUISHER, type.BARREL_FIRE),
             new Anomaly(new Position(70, 685), material.EXTINGUISHER, type.BARREL_FIRE),
@@ -278,54 +288,67 @@ document.addEventListener("DOMContentLoaded", function () {
         dt = d - old_date;
         old_date = d;
 
+        //joueur1
         if (fleche.gauche == true && isPositionValide("x", perso1.pos.x - 1) && validYLines.includes(perso1.pointRef.y)) {
             if (testMurLeft(perso1)) {
                 perso1.goLeft();
             }
         }
-        if (fleche2.gauche == true && isPositionValide("x", perso2.pos.x - 1) && validYLines.includes(perso2.pointRef.y)) {
-            if (testMurLeft(perso2)) {
-                perso2.goLeft();
-            }
-        }
-
 
         if (fleche.haut == true && isPositionValide("y", perso1.pos.y - 1) && isPossibleToUp(perso1)) {
             perso1.goUp();
         }
-        if (fleche2.haut == true && isPositionValide("y", perso2.pos.y - 1) && isPossibleToUp(perso2)) {
-            perso2.goUp();
-        }
-
 
         if (fleche.droite == true && isPositionValide("x", perso1.pos.x + 1) && validYLines.includes(perso1.pointRef.y)) {
             if (testMurRight(perso1)) {
                 perso1.goRight();
             }
         }
-        if (fleche2.droite == true && isPositionValide("x", perso2.pos.x + 1) && validYLines.includes(perso2.pointRef.y)) {
-            if (testMurRight(perso2)) {
-                perso2.goRight();
-            }
-        }
 
-
-        if (fleche.bas == true && isPositionValide("y", perso1.pos.y + 1) && isPossibleToDown(perso1)) {
+     	if (fleche.bas == true && isPositionValide("y", perso1.pos.y + 1) && isPossibleToDown(perso1)) {
             perso1.goDown();
             perso1.onALadder = false;
         }
-        if (fleche2.bas == true && isPositionValide("y", perso2.pos.y + 1) && isPossibleToDown(perso2)) {
-            perso2.goDown();
-            perso2.onALadder = false;
-        }
-
 
         if ((perso1.pointRef.y == validYLines[0] || perso1.pointRef.y == validYLines[1] || perso1.pointRef.y == validYLines[2]) && (fleche.droite == false && fleche.gauche == false)) {
             perso1.stoped();
         }
-        if ((perso2.pointRef.y == validYLines[0] || perso2.pointRef.y == validYLines[1] || perso2.pointRef.y == validYLines[2]) && (fleche2.droite == false && fleche2.gauche == false)) {
-            perso2.stoped();
+
+        //joueur2
+        if(nbJoueur == 2){
+        	if (fleche2.gauche == true && isPositionValide("x", perso2.pos.x - 1) && validYLines.includes(perso2.pointRef.y)) {
+	            if (testMurLeft(perso2)) {
+	                perso2.goLeft();
+	            }
+	        }
+
+	        if (fleche2.haut == true && isPositionValide("y", perso2.pos.y - 1) && isPossibleToUp(perso2)) {
+	            perso2.goUp();
+	        }
+
+
+	        
+	        if (fleche2.droite == true && isPositionValide("x", perso2.pos.x + 1) && validYLines.includes(perso2.pointRef.y)) {
+	            if (testMurRight(perso2)) {
+	                perso2.goRight();
+	            }
+	        }
+
+
+	       
+	        if (fleche2.bas == true && isPositionValide("y", perso2.pos.y + 1) && isPossibleToDown(perso2)) {
+	            perso2.goDown();
+	            perso2.onALadder = false;
+	        }
+
+
+	        
+	        if ((perso2.pointRef.y == validYLines[0] || perso2.pointRef.y == validYLines[1] || perso2.pointRef.y == validYLines[2]) && (fleche2.droite == false && fleche2.gauche == false)) {
+	            perso2.stoped();
+	        }
         }
+
+        
 
 
         nbFrame += dt;
@@ -339,11 +362,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
         }
 
-        if (isSpacebarPressed2) {
-            isSpacebarPressed2 = false;
-            executeSpace(perso2);
+        if(nbJoueur==2){
+        	if (isSpacebarPressed2) {
+	            isSpacebarPressed2 = false;
+	            executeSpace(perso2);
 
+	        }
         }
+        
 
         thisTime += dt;
         if (lastTime + 333 < thisTime) {
@@ -365,7 +391,10 @@ document.addEventListener("DOMContentLoaded", function () {
         inGame = !increaseWaterLevel();
 
         perso1.updatePointRef();
-        perso2.updatePointRef();
+        if(nbJoueur==2){
+        	perso2.updatePointRef();
+        }
+        
         moveInWaterSupplies();
 
     };
@@ -378,7 +407,10 @@ document.addEventListener("DOMContentLoaded", function () {
         drawShelve();
         drawScore();
         drawPersonage(perso1);
-        drawPersonage(perso2);
+        if(nbJoueur==2){
+        	drawPersonage(perso2);
+        }
+        
         drawWater();
     };
 
@@ -636,8 +668,12 @@ document.addEventListener("DOMContentLoaded", function () {
         return false
     };
 
-    init();
-
+    document.getElementById('btn1j').onclick = function(){
+    	init(1);
+    }
+    document.getElementById('btn2j').onclick = function(){
+    	init(2);
+    }
 
 });
 
