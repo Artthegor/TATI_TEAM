@@ -50,10 +50,7 @@ var nbJoueur = 1;
 var snd1;
 var soundTakeItem;
 var soundMusic;
-
-var shelvesStick;
-var shelvesWood;
-var shelvesIron;
+var soundMenu;
 
 function success(pos) {
     getWeather(pos.coords.latitude, pos.coords.longitude);
@@ -99,6 +96,9 @@ function getWeather(latitude, longitude) {
 document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("zoneJeu").addEventListener('click', getPositionMouse);
+    soundMenu = new Sound("music/Music_menu_2voix.mp3");
+    soundMenu.play();
+
 
     function getPositionMouse(e) {
         console.log("(" + e.clientX + "," + e.clientY + ")");
@@ -499,7 +499,7 @@ document.addEventListener("DOMContentLoaded", function () {
         for (const anomaly of this.anomalys) {
             var offset=-50
             var right = -30;
-            
+
                 if(anomaly.type=== type.HELM ||anomaly.type=== type.LEVER) {
                     offset = 16;
                     right =0;
@@ -764,9 +764,11 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     document.getElementById('btn1j').onclick = function () {
+        soundMenu.stop();
         init(1);
     };
     document.getElementById('btn2j').onclick = function () {
+        soundMenu.stop();
         init(2);
     }
 

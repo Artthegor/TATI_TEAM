@@ -67,7 +67,7 @@ class Anomaly {
     initSprite() {
         switch (this.type) {
             case 'brockenPipe':
-                this.sprite.broken.src = "images/fuite.png";
+                this.sprite.broken.src = "images/fissure.png";
                 this.sprite.broken.width = 10;
                 this.sprite.broken.height = 10;
                 this.sprite.notBroken.src ="";
